@@ -1,0 +1,26 @@
+.emoji-selector(class=chatscreen)
+    ul.nav.nav-pills
+      li.active
+        a(data-toggle="tab", href="#emoji-human")
+          i.fa.fa-smile-o.fa-1bx
+      li
+        a(data-toggle="tab", href="#emoji-nature")
+          i.fa.fa-leaf.fa-1bx
+      li
+        a(data-toggle="tab", href="#emoji-staff")
+          i.fa.fa-bell-o.fa-1bx
+      li
+        a(data-toggle="tab", href="#emoji-structures")
+          i.fa.fa-car.fa-1bx
+      li
+        a(data-toggle="tab", href="#emoji-symbols")
+          i.fa.fa-cc.fa-1bx
+
+    .tab-content.undernav
+        .tab-pane.fade.in.active.emoji-pane(id='emoji-human')
+          include ./emoji-codes/human.jade
+        .tab-pane.fade.emoji-pane(id='emoji-nature')
+          include ./emoji-codes/nature.jade
+        .tab-pane.fade.emoji-pane(id='emoji-staff')
+        .tab-pane.fade.emoji-pane(id='emoji-structures')
+        .tab-pane.fade.emoji-pane(id='emoji-symbols')

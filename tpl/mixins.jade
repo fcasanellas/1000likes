@@ -1,0 +1,99 @@
+mixin chatscreen(chatscreen)
+  .chatscreen
+    .selector(ng-hide='current_chatroom.'+chatscreen)
+      ul.nav.nav-tabs(class=chatscreen)
+        li.active
+          a(data-toggle="tab", href="#actors-"+chatscreen, ng-click="Ctrl.resetChatroom()")
+            i.fa.fa-user.fa-1x
+            &nbsp;Actors
+        li(ng-show='userchats.'+chatscreen)
+          a(data-toggle="tab", href="#users-"+chatscreen, ng-click="Ctrl.resetChatroom()")
+            i.fa.fa-user.fa-1x
+            &nbsp;Users
+        li
+          a(data-toggle="tab", href="#groups-"+chatscreen, ng-click="Ctrl.resetChatroom()")
+            i.fa.fa-users.fa-1x
+            &nbsp;Groups
+        button.pull-right.btn.participation-button(ng-show='current_user.'+chatscreen+'.status', ng-click="Ctrl.toggleParticipation()")
+          i.fa.fa-comment
+      .tab-content.undernav.chat-selector(class=chatscreen)
+        .tab-pane.fade.in.active(id='actors-'+chatscreen)
+          ul.list-group
+            li.list-group-item(ng-model='actorchats.'+chatscreen, ng-repeat='actorchat in actorchats.'+chatscreen+' | orderObjectBy: "created" : true', ng-class="{0: 'open', 1:'closed'}[actorchat.status]")
+              a(href="#", ng-if='current_user.'+chatscreen+'.role == 0', ng-click='Ctrl.selectChatroom(actorchat.id1, current_user.'+chatscreen+'.username, "'+chatscreen+'", actorchat.status)')
+                {{actorchat.id1}}
+              a(href="#", ng-if='current_user.'+chatscreen+'.role == 1 && current_user.'+chatscreen+'.username == actorchat.id1', ng-click='Ctrl.selectChatroom(actorchat.id1, actorchat.id2, "'+chatscreen+'", actorchat.status)')
+                {{actorchat.id2}}
+              a(href="#", ng-if='current_user.'+chatscreen+'.role == 1 && current_user.'+chatscreen+'.username != actorchat.id1', ng-click='Ctrl.selectChatroom(actorchat.id1, actorchat.id2, "'+chatscreen+'", actorchat.status)')
+                {{actorchat.id1}}
+              .btn-group.btn-group-xs.pull-right
+                button.btn.btn-primary(ng-class="{'btn-danger':beamerchats.beamer.id1==actorchat.id1 && beamerchats.beamer.id2==actorchat.id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2")', ng-click='Ctrl.sendToBeamer(actorchat.id1, actorchat.id2, "beamer")')
+                  i.fa.fa-desktop.fa-1x
+                button.btn.btn-info(ng-class="{'btn-danger':beamerchats.beamer2.id1==actorchat.id1 && beamerchats.beamer2.id2==actorchat.id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2")', ng-click='Ctrl.sendToBeamer(actorchat.id1, actorchat.id2, "beamer2")')
+                  i.fa.fa-desktop.fa-1x
+              span.badge(ng-hide='actorchat.recived == 0')
+                {{actorchat.recived}}
+        .tab-pane.fade(id='users-'+chatscreen, ng-show='userchats.'+chatscreen)
+          ul.list-group
+            li.list-group-item(ng-model='userchats.'+chatscreen, ng-repeat='userchat in userchats.'+chatscreen+' | orderObjectBy: "created" : true', ng-class="{0: 'open', 1:'closed'}[userchat.status]")
+              a(href="#", ng-if='current_user.'+chatscreen+'.role == 0', ng-click='Ctrl.selectChatroom(userchat.id1, current_user.'+chatscreen+'.username, "'+chatscreen+'")')
+                {{userchat.id1}}
+              a(href="#", ng-if='current_user.'+chatscreen+'.role == 1', ng-click='Ctrl.selectChatroom(current_user.'+chatscreen+'.username, userchat.id2, "'+chatscreen+'")')
+                {{userchat.id2}}
+              .btn-group.btn-group-xs.pull-right
+                button.btn.btn-primary(ng-class="{'btn-danger':beamerchats.beamer.id1==userchat.id1 && beamerchats.beamer.id2==userchat.id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2") && (current_user.'+chatscreen+'.role == 1)', ng-click='Ctrl.sendToBeamer(current_user.'+chatscreen+'.username, userchat.id2, "beamer")')
+                  i.fa.fa-desktop.fa-1x
+                button.btn.btn-info(ng-class="{'btn-danger':beamerchats.beamer2.id1==userchat.id1 && beamerchats.beamer2.id2==userchat.id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2") && (current_user.'+chatscreen+'.role == 1)', ng-click='Ctrl.sendToBeamer(current_user.'+chatscreen+'.username, userchat.id2, "beamer2")')
+                  i.fa.fa-desktop.fa-1x
+              span.badge(ng-hide='userchat.recived == 0')
+                {{userchat.recived}}
+        .tab-pane.fade(id='groups-'+chatscreen, ng-show='groupchats.'+chatscreen)
+          ul.list-group
+            li.list-group-item(ng-model='groupchats.'+chatscreen, ng-repeat='groupchat in groupchats.'+chatscreen+' | orderObjectBy: "created" : true', ng-class="{0: 'open', 1:'closed', 2:'accessible'}[groupchat.status]")
+              a(href="#", ng-click='Ctrl.selectChatroom(groupchat.id1, "GROUP", "'+chatscreen+'", groupchat.status)'){{groupchat.id1}}
+              .btn-group.btn-group-xs.pull-right
+                button.btn.btn-primary(ng-class="{'btn-danger':beamerchats.beamer.id1==groupchat.id1 && beamerchats.beamer.id2==groupchat.id2}", ng-if='"'+chatscreen+'"== "admin"', ng-click='Ctrl.sendToBeamer(groupchat.id1, "GROUP", "beamer")')
+                  i.fa.fa-desktop.fa-1x
+                button.btn.btn-info(ng-class="{'btn-danger':beamerchats.beamer2.id1==groupchat.id1 && beamerchats.beamer2.id2==groupchat.id2}", ng-if='"'+chatscreen+'"== "admin"', ng-click='Ctrl.sendToBeamer(groupchat.id1, "GROUP", "beamer2")')
+                  i.fa.fa-desktop.fa-1x
+              span.badge(ng-hide='groupchat.recived == 0')
+                {{groupchat.recived}}
+    .chat-pane(ng-show='current_chatroom.'+chatscreen)
+      +chatpane(chatscreen)
+
+mixin chatpane(chatscreen)
+  twemoji
+    ul.nav.nav-pills(class=chatscreen)
+      li.presentation.active
+        a(href="#", ng-click='Ctrl.resetChatroom("'+chatscreen+'")')
+          i.fa.fa-chevron-left.fa-1x
+      li.presentation.disabled
+        a(ng-if='current_user.'+chatscreen+'.role == 0 || current_chatroom.'+chatscreen+'.id2 == "GROUP"')
+          {{current_chatroom.!{chatscreen}.id1}}
+        a(ng-if='current_user.'+chatscreen+'.role == 1 && current_chatroom.'+chatscreen+'.id2 != "GROUP" && current_user.'+chatscreen+'.username != current_chatroom.'+chatscreen+'.id2')
+          {{current_chatroom.!{chatscreen}.id2}}
+        a(ng-if='current_user.'+chatscreen+'.role == 1 && current_chatroom.'+chatscreen+'.id2 != "GROUP" && current_user.'+chatscreen+'.username == current_chatroom.'+chatscreen+'.id2')
+          {{current_chatroom.!{chatscreen}.id1}}
+        a(ng-if='("'+chatscreen+'"=="beamer" || "'+chatscreen+'"== "beamer2") && current_chatroom.'+chatscreen+'.id2 != "GROUP"')
+          {{current_chatroom.!{chatscreen}.id1}} - {{current_chatroom.!{chatscreen}.id2}}
+    .undrenav.message-pane(scroll-glue="glued", class=chatscreen)
+      ul
+        li(ng-model="messages", ng-repeat="message in messages."+chatscreen, ng-class="{'self':message.author==current_user."+chatscreen+".username, 'other':message.author!=current_user."+chatscreen+".username}")
+          .msg
+            .user
+              {{message.author}}
+            .text(ng-bind-html="message.text | twemoji")
+            //
+              .date
+                {{message.created | date : 'short' }}
+    .chat-form(ng-if="current_chatroom."+chatscreen+".status == 2 && current_user."+chatscreen+".role == 0 && current_user."+chatscreen+".status != 3")
+      .text-input.non-editable(id=chatscreen)
+        i No podeu participar en aquesta conversa
+    .chat-form(ng-if="current_chatroom."+chatscreen+".status != 2 || current_user."+chatscreen+".role == 1 || current_user."+chatscreen+".status == 3")
+      form(ng-submit='Ctrl.sendMessage("'+chatscreen+'")')
+          .btn.emoji-button
+            i.fa.fa-smile-o.fa-2x
+          .text-input(contenteditable='true', id=chatscreen)
+          button.btn.btn-success(type="submit", name="as")
+            i.fa.fa-send.fa-1x
+    include ./emoji-selector.jade

@@ -1,0 +1,14 @@
+{
+  "name" : "1000Likes",
+  "version" : "0.0.3",
+  "description" : "Webchat tool fo 1000Likes show",
+  "main" : "server.js",
+  "author" : "Fèlix Casanellas - L'Hivernacle",
+  "dependencies" : {
+    "express" : "~4.7.2",
+    "mongoose" : "~3.6.2",
+    "morgan" : "~1.2.2",
+    "jade" : "~0.31.2",
+    "socket.io" : "~0.9.16"
+  }
+}

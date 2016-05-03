@@ -1,0 +1,22 @@
+.col-md-4(ng-repeat='column in chat_defaults_schema')
+  div(ng-repeat='key in column')
+    {{chat_defaults_index[key].id1}}
+    span(ng-hide="chat_defaults_index[key].id2 == 'GROUP'")
+      | - {{chat_defaults_index[key].id2}}
+    | &nbsp;
+    span.badge
+      {{chat_defaults_index[key].position}}/{{chat_defaults_index[key].total}}
+    .input-group.input-group-sm
+      span.input-group-btn
+        button.btn.btn-default(ng-click='Ctrl.loadChat(key)')
+          i.fa.fa-download.fa-1x
+        button.btn.btn-default(ng-click='chat_defaults_index[key].position==chat_defaults_index[key].total || Ctrl.increaseChat(key)', ng-class="{'disabled':chat_defaults_index[key].position==chat_defaults_index[key].total}")
+          i.fa.fa-plus.fa-1x
+      input.form-control(type='text', placeholder='Pos..', ng-model="chat_defaults_index[key].goto")
+      span.input-group-btn
+        button.btn.btn-default(ng-click='Ctrl.goToChat(key)')
+          i.fa.fa-arrow-right.fa-1x
+        button.btn.btn-primary(ng-class="{'btn-danger':beamerchats.beamer.id1==chat_defaults_index[key].id1 && beamerchats.beamer.id2==chat_defaults_index[key].id2}", ng-click='Ctrl.sendToBeamer(chat_defaults_index[key].id1, chat_defaults_index[key].id2, "beamer")')
+          i.fa.fa-desktop.fa-1x
+        button.btn.btn-info(ng-class="{'btn-danger':beamerchats.beamer2.id1==chat_defaults_index[key].id1 && beamerchats.beamer2.id2==chat_defaults_index[key].id2}", ng-click='Ctrl.sendToBeamer(chat_defaults_index[key].id1, chat_defaults_index[key].id2, "beamer2")')
+          i.fa.fa-desktop.fa-1x

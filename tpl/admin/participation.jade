@@ -1,0 +1,16 @@
+table.table.table-striped
+  thead
+    tr
+      th Username
+      th Message
+      th Actions
+  tbody
+    tr(ng-model="petitions", ng-repeat="petition in petitions")
+      td {{petition.username}}
+      td {{petition.message}}
+      td
+        .btn-group.btn-group-xs
+          button.btn.btn-warning(ng-click="petition.status = 1; Ctrl.updatePetition(petition)")
+            i.fa.fa-star.fa-1x
+          button.btn.btn-danger(ng-click="petition.status = 2; Ctrl.updatePetition(petition)")
+            i.fa.fa-trash.fa-1x

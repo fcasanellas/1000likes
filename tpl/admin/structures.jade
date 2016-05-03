@@ -1,0 +1,94 @@
+.main-menu
+  ul.nav.nav-pills
+    li.active
+      a(data-toggle="pill",href="#actor",ng-click="Ctrl.resetChats()") Actors
+    li
+      a(data-toggle="pill",href="#user",ng-click="Ctrl.resetChats()") Users
+    li
+      a(data-toggle="pill",href="#group",ng-click="Ctrl.resetChats()") Groups
+  .tab-content
+    #actor.tab-pane.fade.in.active
+      table.table.table-striped
+        thead
+          tr
+            th Username
+            th Status
+            th Actions
+        tbody
+          tr(ng-model="actors", ng-repeat="actor in actors")
+            td {{actor.username}}
+            td
+              span(ng-show="actor.status==0") Obert
+              span(ng-show="actor.status==1") Tancat
+              span(ng-show="actor.status==2") Accessible
+
+              // En principi no es modifica l'estat dels actors, l'accés es dona via bypass dels usuaris
+                select(ng-model="actor.status", ng-change="Ctrl.changeUserStatus(actor)")
+                  option(value=0, ng-selected="actor.status==0") Accessible
+                  option(value=1, ng-selected="actor.status==1") No accessible
+            td
+              .btn-group.btn-group-xs
+                button.btn.btn-default(ng-click="Ctrl.loadUser(actor, 'admin')", ng-class="{'btn-danger':current_user.admin.username==actor.username}")
+                  i.fa.fa-eye.fa-1x
+                button.btn.btn-default(ng-click="Ctrl.loadUser(actor, 'admin2')", ng-class="{'btn-danger':current_user.admin2.username==actor.username}")
+                  i.fa.fa-eye.fa-1x
+      //
+        .newactor-form
+          h3 New actor
+          form(ng-submit='Ctrl.addUser(1)')
+            | &nbsp;Username&nbsp;
+            input(size='30', ng-model='newusername')
+            | &nbsp;Status&nbsp;
+            select(ng-model='newuserstatus')
+              option(value=0, ng-selected="group.status==0") Accessible
+              option(value=1, ng-selected="group.status==1") No accessible
+            input(type='submit', value='Send')
+
+    #user.tab-pane.fade
+      table.table.table-striped
+        thead
+          tr
+            th Username
+            th Status
+            th Actions
+        tbody
+          tr(ng-model="users", ng-repeat="(username, user) in users | orderObjectBy: 'status' : true", ng-class="{'success' : user.status == 3}")
+            td {{user.username}}
+            td
+              select(ng-model="user.status", ng-change="Ctrl.changeUserStatus(user)")
+                option(value=0, ng-selected="user.status==0") Actiu
+                option(value=1, ng-selected="user.status==1") Participació oberta
+                option(value=2, ng-selected="user.status==2") Bloquejat
+                option(value=3, ng-selected="user.status==3") Bypass
+            td
+              .btn-group.btn-group-xs
+                button.btn.btn-default(ng-click="Ctrl.loadUser(user, 'admin')", ng-class="{'btn-danger':current_user.admin.username==user.username}")
+                  i.fa.fa-eye.fa-1x
+                button.btn.btn-default(ng-click="Ctrl.loadUser(user, 'admin2')", ng-class="{'btn-danger':current_user.admin2.username==user.username}")
+                  i.fa.fa-eye.fa-1x
+    #group.tab-pane.fade
+      table.table.table-striped
+        thead
+          tr
+            th Name
+            th Status
+        tbody
+          tr(ng-model='groups', ng-repeat='group in groups')
+            td {{group.id1}}
+            td
+              select(ng-model="group.status", ng-change="Ctrl.changeGroupStatus(group)")
+                option(value=0, ng-selected="group.status==0") Obert
+                option(value=1, ng-selected="group.status==1") Tancat
+                option(value=2, ng-selected="group.status==2") Accessible
+      //
+        .newgroup-form
+          h3 New group
+          form(ng-submit='Ctrl.addGroup()')
+            | &nbsp;Group name&nbsp;
+            input(size='30', ng-model='newgroupname')
+            | &nbsp;Status&nbsp;
+            select(ng-model='newgroupstatus')
+              option(value=0, ng-selected="group.status==0") Obert
+              option(value=1, ng-selected="group.status==1") Tancat
+              option(value=2, ng-selected="group.status==2") Accessible
+            input(type='submit', value='Send')

@@ -1,0 +1,67 @@
+include mixins
+doctype
+html(lang="ca" )
+  head
+    title="1000Likes"
+    link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/libs/angular/angular.js')
+    script(src='/libs/angular-cookies/angular-cookies.js')
+    script(src='/libs/angular-sanitize/angular-sanitize.js')
+    script(src='/libs/twemoji/twemoji.js')
+    script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
+    script(src='/libs/angular-scroll-glue/src/scrollglue.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/admin.js')
+    script(src='/js/functions.js')
+  body(ng-app="1000likes", ng-controller="AdminController as Ctrl")
+    script(src='/libs/jquery/dist/jquery.min.js')
+    script(src='/libs/jquery-resize/jquery.ba-resize.min.js')
+    script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/jquery-script.js')
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand
+            | 1000Likes - Admin interface
+        .collapse.navbar-collapse.navbar-right
+          button.btn.btn-default.navbar-btn(ng-class="{'btn-danger': participation == true}", ng-click='Ctrl.toggleParticipation()')
+            | Toggle participation
+          | &nbsp;
+          button.btn.btn-default.navbar-btn.btn-primary(ng-class="{disabled: beamerchats.beamer == null}", ng-click='beamerchats.beamer == null || Ctrl.sendToBeamer(beamerchats.beamer.id1, beamerchats.beamer.id2, "beamer")')
+            i.fa.fa-desktop.fa-1x
+            span(ng-show='beamerchats.beamer')
+              | &nbsp; {{beamerchats.beamer.id1}} - {{beamerchats.beamer.id2}}
+          | &nbsp;
+          button.btn.btn-default.navbar-btn.btn-info(ng-class="{disabled: beamerchats.beamer2 == null}", , ng-click='beamerchats.beamer2 == null || Ctrl.sendToBeamer(beamerchats.beamer2.id1, beamerchats.beamer2.id2, "beamer2")')
+            i.fa.fa-desktop.fa-1x
+            span(ng-show='beamerchats.beamer2')
+              | &nbsp; {{beamerchats.beamer2.id1}} - {{beamerchats.beamer2.id2}}
+    .container
+      .row
+        .col-md-8
+          .panel.panel-primary
+            .panel-heading
+              | Load data
+            .panel-body
+              include ./admin/defaults.jade
+        .col-md-4
+          .panel.panel-primary
+            .panel-heading
+              | Participation
+            .panel-body
+              include ./admin/participation.jade
+      .row
+        .col-md-6
+          .panel.panel-primary
+            .panel-heading
+              | Structures
+            .panel-body
+              include ./admin/structures.jade
+        .col-md-6
+          .panel.panel-primary
+            .panel-heading
+              | Admin viewer
+            .panel-body
+              include ./admin/chat-screen.jade

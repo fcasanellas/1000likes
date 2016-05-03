@@ -1,0 +1,160 @@
+include mixins
+doctype
+html(lang="ca")
+  head
+    title="1000Likes"
+    link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/libs/angular/angular.js')
+    script(src='/libs/angular-cookies/angular-cookies.js')
+    script(src='/libs/angular-sanitize/angular-sanitize.js')
+    script(src='/libs/angular-route/angular-route.js')
+    script(src='/libs/twemoji/twemoji.js')
+    script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
+    script(src='/libs/angular-scroll-glue/src/scrollglue.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/app.js')
+    script(src='/js/functions.js')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    meta(name='mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-capable',content='yes')
+
+  body.app(ng-app="1000likes", ng-controller="AppController as Ctrl")
+    script(src='/libs/jquery/dist/jquery.min.js')
+    script(src='/libs/jquery-resize/jquery.ba-resize.min.js')
+    script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/jquery-script.js')
+
+    .modal.fade#wellcomeModal(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/welcome.svg")
+              h4 El teu sobrenom en aquesta sessió serà
+                b &nbsp;{{current_user.app.username}}
+
+    .modal.fade#groupClosedModal(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupClosed.svg")
+              h4 Aquesta conversa s'ha tancat
+    .modal.fade#groupAccessibleModal(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupAccessible.svg")
+              h4 No pots participar en aquesta conversa
+    .modal.fade#groupOpenModal(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupOpen.svg")
+              h4 Ja pots participar en aquesta conversa
+    .modal.fade#userBlocked(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+            .modal-body
+              img.img-responsive(src="images/userBlocked.svg")
+              h4 El teu usuari està bloquejat
+    .modal.fade#userParticipation(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupOpen.svg")
+              h4 Ja pots participar
+    .modal.fade#userBypass(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupOpen.svg")
+              h4 La teva petició ha estat acceptada. Pots escriure als grups i als personatges
+    .modal.fade#userNoBypass(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupClosed.svg")
+              h4 La teva petició ha estat rebutjada. Si vols ho pots tornar a provar amb un altre argument
+    .modal.fade#userNormal(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              img.img-responsive(src="images/groupAccessible.svg")
+              h4 De moment pots veure els xats però no intervenir-hi
+    .modal.fade#participationForm(tabindex="-1", role="dialog")
+      .vertical-alignment-helper
+        .modal-dialog.vertical-align-center
+          .modal-content
+            .modal-header
+              img(src="images/logo.svg")
+              button.close(type="button",data-dismiss="modal", aria-label="Close")
+                span(aria-hidden="true")
+                  &times;
+            .modal-body
+              #petition-message.bg-warning(ng-hide="petition.status == null && current_user.app.status != 3")
+                p(ng-show = "petition.status == 0")
+                  | La teva petició està pendent d'aprovació
+                p(ng-show = "petition.status == 1 || current_user.app.status == 3")
+                  | La teva petició ha estat acceptada. Pots escriure als grups i personatges
+                p(ng-show = "petition.status == 0")
+                  i {{petition.message}}
+
+              #petition-form(ng-show="petition.status == null && current_user.app.status != 3")
+                form(ng-submit='Ctrl.sendPetition("app")')
+                  textarea.form-control(rows="5", placeholder="Explica per quin motiu vols intervenir ...", ng-model="petition.message")
+                  &nbsp;
+                  button.btn.btn-lg.btn-block(type="submit")
+                    | Envia
+    +chatscreen("app")

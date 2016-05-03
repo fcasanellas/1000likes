@@ -1,0 +1,17 @@
+{
+    "name": "1000Likes",
+    "version": "0.0.3",
+    "dependencies": {
+      "angular": "*",
+      "angular-cookies": "*",
+      "angular-sanitize": "*",
+      "angular-route": "*",
+      "bootstrap": "*",
+      "jquery": "*",
+      "jquery-resize": "*",
+      "fontawesome": "*",
+      "angular-scroll-glue": "*",
+      "twemoji": "*",
+      "angular-twemoji": "*"
+    }
+}

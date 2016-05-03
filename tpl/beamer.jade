@@ -1,0 +1,32 @@
+include mixins
+doctype
+html(lang="ca")
+  head
+    title="1000Likes"
+    link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/libs/angular/angular.js')
+    script(src='/libs/angular-cookies/angular-cookies.js')
+    script(src='/libs/angular-sanitize/angular-sanitize.js')
+    script(src='/libs/angular-route/angular-route.js')
+    script(src='/libs/twemoji/twemoji.js')
+    script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
+    script(src='/libs/angular-scroll-glue/src/scrollglue.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/beamer.js')
+    script(src='/js/functions.js')
+
+  body.beamer(ng-app="1000likes", ng-controller="BeamerController as Ctrl")
+    script(src='/libs/jquery/dist/jquery.min.js')
+    script(src='/libs/jquery-resize/jquery.ba-resize.min.js')
+    script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/jquery-script.js')
+
+    #wrapper
+      .chatscreen(ng-show='current_chatroom.beamer')
+        .chat-pane
+          +chatpane("beamer")
+      .chatscreen(ng-show='current_chatroom.beamer2')
+        .chat-pane
+          +chatpane("beamer2")

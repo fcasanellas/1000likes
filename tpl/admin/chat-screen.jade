@@ -1,0 +1,17 @@
+.main-menu
+  ul.nav.nav-pills(ng-show="current_user.admin || current_user.admin2")
+    li(ng-show="current_user.admin")
+      a(data-toggle="tab",href="#admin")
+        i.fa.fa-eye.fa-1x
+        &nbsp; {{current_user.admin.username}}
+    li(ng-show="current_user.admin2")
+      a(data-toggle="tab",href="#admin2")
+        i.fa.fa-eye.fa-1x
+        &nbsp; {{current_user.admin2.username}}
+  .tab-content
+    #admin.tab-pane.fade.in.active
+      .chatscreen(ng-show="current_user.admin")
+        +chatscreen("admin")
+    #admin2.tab-pane.fade.in
+      .chatscreen(ng-show="current_user.admin2")
+        +chatscreen("admin2")
