@@ -6,13 +6,11 @@
 var express = require ('express');
 var app = express();
 var mongoose = require('mongoose');
-var morgan = require('morgan');
 var port = 8080;
 
 //CONFIGURATION
 mongoose.connect("mongodb://127.0.0.1:27017/1000Likes_v03"); //connect to MongoDB
 app.use(express.static(__dirname + '/public')); // set the static files location
-app.use(morgan('dev')); // log every request to the console
 app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
@@ -101,7 +99,10 @@ setTimeout(function() {
 
 //EXPRESS ROUTES
 app.get("/", function(req, res){
+    console.log('START RENDER');
     res.render("page");
+    //res.render("test");
+    console.log('END RENDER');
 });
 app.get("/admin", function(req, res){
     res.render("admin");
