@@ -7,10 +7,10 @@
         a(data-toggle="tab", href="#emoji-nature")
           i.fa.fa-leaf.fa-1bx
       li
-        a(data-toggle="tab", href="#emoji-staff")
+        a(data-toggle="tab", href="#emoji-stuff")
           i.fa.fa-bell-o.fa-1bx
       li
-        a(data-toggle="tab", href="#emoji-structures")
+        a(data-toggle="tab", href="#emoji-space")
           i.fa.fa-car.fa-1bx
       li
         a(data-toggle="tab", href="#emoji-symbols")
@@ -18,7 +18,12 @@
 
     .tab-content.undernav
         .tab-pane.fade.in.active.emoji-pane(id='emoji-human')
+          include ./emoji-codes/human.jade
         .tab-pane.fade.emoji-pane(id='emoji-nature')
-        .tab-pane.fade.emoji-pane(id='emoji-staff')
-        .tab-pane.fade.emoji-pane(id='emoji-structures')
+          include ./emoji-codes/nature.jade
+        .tab-pane.fade.emoji-pane(id='emoji-stuff')
+          include ./emoji-codes/stuff.jade
+        .tab-pane.fade.emoji-pane(id='emoji-space')
+          include ./emoji-codes/space.jade
         .tab-pane.fade.emoji-pane(id='emoji-symbols')
+          include ./emoji-codes/symbols.jade

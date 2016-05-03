@@ -1,6 +1,15 @@
 (function(){
   var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize']);
 
+  //CONFIGURATION
+  app.config(function(twemojiProvider) {
+    twemojiProvider.setOptions({
+      base: '/libs/twemoji/',
+      size: 'svg',
+      ext: '.svg',
+    });
+  });
+
   //SERVICES
   //Service to interact with the socket library
   app.factory('socket', function ($rootScope) {

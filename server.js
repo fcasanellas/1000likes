@@ -99,10 +99,7 @@ setTimeout(function() {
 
 //EXPRESS ROUTES
 app.get("/", function(req, res){
-    console.log('START RENDER');
     res.render("page");
-    //res.render("test");
-    console.log('END RENDER');
 });
 app.get("/admin", function(req, res){
     res.render("admin");
