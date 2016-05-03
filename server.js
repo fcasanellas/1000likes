@@ -4,7 +4,6 @@
 
 //SETUP
 var express = require ('express');
-var compass = require('compass');
 var app = express();
 var mongoose = require('mongoose');
 var morgan = require('morgan');
