@@ -108,6 +108,9 @@ app.get("/beamer", function(req, res){
     res.render("beamer");
 });
 
+//LOCAL VARS
+var default_status = 0;
+
 //SOCKET.IO
 var io = require('socket.io').listen(app.listen(port));
 var sockettree = {
@@ -158,7 +161,6 @@ io.sockets.on('connection', function (socket) {
     //Load chats by category
     socket.on('chat:load_by_category', function(data){
       var util = require('util');
-      console.log(util.inspect(data, false, null));
       switch (data.category) {
         case 0:
           if (data.role == 0) {
@@ -215,10 +217,10 @@ io.sockets.on('connection', function (socket) {
         created: new Date(),
         username: data.username,
         role: data.role,
-        status: data.status
+        status: default_status
       });
       //Save it to database
-      user.save(function(err, msg){ console.log(msg);});
+      user.save(function(err, msg){});
       if (data.role == 0) {
         //If it isn't an actor, generate chatrooms with actors
         User.find({role: 1, status: {'$ne': 1}},function(err, res) {
@@ -239,6 +241,7 @@ io.sockets.on('connection', function (socket) {
         if(sockettree.admin) sockettree.admin.emit('user:new', user);
         //Store socket in sockettree
         sockettree.users[data.username] = socket;
+        console.log('USER SOCKET REGISTERED ('+data.username+'): '+socket.id);
 
       } else {
         //TODO: En principi no es creen usuaris nous en directe per tant aquesta part deixaria de servir
@@ -303,6 +306,10 @@ io.sockets.on('connection', function (socket) {
       User.find({role: role}, function(err,res){
         socket.emit('user:load_by_role', res, role);
       });
+    });
+    //Update default status
+    socket.on('user:update_default_status', function(status) {
+      default_status = status;
     });
 
 
@@ -373,7 +380,6 @@ io.sockets.on('connection', function (socket) {
      * Store an stack of messages in order
      */
      function loadMessages(messages, position, chat) {
-       console.log('ENTRA '+position);
        if ( position >= 0) {
          var newMsg = new Message({
            created: new Date(),
@@ -382,7 +388,6 @@ io.sockets.on('connection', function (socket) {
            chat_id2: chat.id2,
            text: messages[position].text
          });
-         console.log(messages[position].text);
          newMsg.save(setTimeout(loadMessages(messages, position-1, chat), 5000));
        }
      }
@@ -444,7 +449,6 @@ io.sockets.on('connection', function (socket) {
       petition.save(function(err, msg){
         //Notify to admin
         sockettree.admin.emit('petition:new', petition);
-        console.log(msg);
       });
     });
     socket.on('petition:update', function (petition) {

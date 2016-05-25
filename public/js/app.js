@@ -138,22 +138,24 @@
         socket.emit('chat:load_by_category', {category: 0, id: user.username, chatscreen: chatscreen, role: user.role});
         //If it's an actor, load chats with other actorchats
         if (user.role == 1) socket.emit('chat:load_by_category', {category: 2, id: user.username, chatscreen: chatscreen, role: user.role});
-        switch (user.status) {
-          case 0:
-            $('#wellcomeModal').modal('show');
-            break;
-          case 2:
-            $('#userBlocked').modal({
-              'show' : true,
-              'backdrop' : 'static',
-              'keyboard' : false
-            });
-            break;
-          default:
+        if (user.role == 0) {
+          switch (user.status) {
+            case 0:
+              $('#wellcomeModal').modal('show');
+              break;
+            case 2:
+              $('#userBlocked').modal({
+                'show' : true,
+                'backdrop' : 'static',
+                'keyboard' : false
+              });
+              break;
+            default:
+          }
         }
       } else {
         username = newUsername();
-        socket.emit('user:new', {username : username, role : 0, status: 0});
+        socket.emit('user:new', {username : username, role : 0});
       }
     });
     //Recive user update
@@ -163,6 +165,7 @@
       $scope.current_user[chatscreen].status = status;
       $('.modal').modal('hide');
       $scope.current_chatroom[chatscreen] = null;
+      $scope.petition = null;
       switch (status) {
         case 0:
           $scope.petition = null;
@@ -177,6 +180,9 @@
             'backdrop' : 'static',
             'keyboard' : false
           });
+          break;
+        case 3:
+          $('#userBypass').modal('show');
           break;
         default:
       }
@@ -229,12 +235,8 @@
     });
     //Recive new chat
     socket.on('chat:new', function(data) {
-      //Only actors recive new chats
-      if ($scope.userchats[chatscreen]) {
-        $scope.userchats[chatscreen].push(data);
-      } else {
-        $scope.userchats[chatscreen] = [data]
-      }
+      //Only actors recive chats when a new user is created
+      $scope.userchats[chatscreen][data.id1+'-'+data.id2] = data;
     });
     //Recive chat update
     socket.on('chat:update', function(data) {

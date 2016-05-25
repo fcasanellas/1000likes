@@ -26,8 +26,12 @@ html(lang="ca" )
           a.navbar-brand
             | 1000Likes - Admin interface
         .collapse.navbar-collapse.navbar-right
-          button.btn.btn-default.navbar-btn(ng-class="{'btn-danger': participation == true}", ng-click='Ctrl.toggleParticipation()')
-            | Toggle participation
+          | Estat general &nbsp;
+          select(ng-model="bulk_status", ng-change="Ctrl.bulkUpdate()")
+            option(value=0, ng-selected="bulk_status==0") Actiu
+            option(value=1, ng-selected="bulk_status==1") Participació oberta
+            option(value=2, ng-selected="bulk_status==2") Bloquejat
+            option(value=3, ng-selected="bulk_status==3") Bypass
           | &nbsp;
           button.btn.btn-default.navbar-btn.btn-primary(ng-class="{disabled: beamerchats.beamer == null}", ng-click='beamerchats.beamer == null || Ctrl.sendToBeamer(beamerchats.beamer.id1, beamerchats.beamer.id2, "beamer")')
             i.fa.fa-desktop.fa-1x

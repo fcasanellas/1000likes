@@ -14,7 +14,7 @@ mixin chatscreen(chatscreen)
           a(data-toggle="tab", href="#groups-"+chatscreen, ng-click="Ctrl.resetChatroom()")
             i.fa.fa-users.fa-1x
             &nbsp;Groups
-        button.pull-right.btn.participation-button(ng-show='current_user.'+chatscreen+'.status', ng-click="Ctrl.toggleParticipation()")
+        button.pull-right.btn.participation-button(ng-show='current_user.'+chatscreen+'.status == 1', ng-click="Ctrl.toggleParticipation()")
           i.fa.fa-comment
       .tab-content.undernav.chat-selector(class=chatscreen)
         .tab-pane.fade.in.active(id='actors-'+chatscreen)
@@ -86,10 +86,10 @@ mixin chatpane(chatscreen)
             //
               .date
                 {{message.created | date : 'short' }}
-    .chat-form(ng-if="current_chatroom."+chatscreen+".status == 2 && current_user."+chatscreen+".role == 0 && current_user."+chatscreen+".status != 3")
+    .chat-form(ng-if="current_chatroom."+chatscreen+".status != 0 && current_user."+chatscreen+".role == 0 && current_user."+chatscreen+".status != 3")
       .text-input.non-editable(id=chatscreen)
         i No podeu participar en aquesta conversa
-    .chat-form(ng-if="current_chatroom."+chatscreen+".status != 2 || current_user."+chatscreen+".role == 1 || current_user."+chatscreen+".status == 3")
+    .chat-form(ng-if="current_chatroom."+chatscreen+".status == 0 || current_user."+chatscreen+".role == 1 || current_user."+chatscreen+".status == 3")
       form(ng-submit='Ctrl.sendMessage("'+chatscreen+'")')
           .btn.emoji-button
             i.fa.fa-smile-o.fa-2x

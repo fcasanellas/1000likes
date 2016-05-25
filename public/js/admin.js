@@ -56,7 +56,7 @@
     $scope.glued = true;
 
     //Deife participation setting
-    $scope.participation = false;
+    $scope.bulk_status = 0;
     $scope.petitions = [];
 
     //Define arrays for current user and more
@@ -234,6 +234,22 @@
         $('a[href="#'+chatscreen+'"]').tab('show');
       }
     }
+    this.bulkUpdate = function(){
+      for(var k in $scope.users) {
+        var userstatus = parseInt($scope.users[k].status);
+        /*
+        if (userstatus != 2 && userstatus != 3) {
+          //L'Usuari no està bloquejat o està en Bypass
+          $scope.users[k].status = (newstatus) ? 1 : 0;
+          socket.emit('user:update', $scope.users[k]);
+        }*/
+        if (userstatus != 2) {
+          $scope.users[k].status = $scope.bulk_status;
+          socket.emit('user:update', $scope.users[k]);
+        }
+      }
+      socket.emit('user:update_default_status', $scope.bulk_status);
+    }
 
     //CHAT FUNCTIONS
     this.addGroup = function(role){
@@ -310,18 +326,6 @@
     };
 
     //PARTICIPATION FUNCTIONS
-    this.toggleParticipation = function(){
-      var newstatus = !$scope.participation;
-      for(var k in $scope.users) {
-        var userstatus = parseInt($scope.users[k].status);
-        if (userstatus != 2 && userstatus != 3) {
-          //L'Usuari no està bloquejat o està en Bypass
-          $scope.users[k].status = (newstatus) ? 1 : 0;
-          socket.emit('user:update', $scope.users[k]);
-        }
-      }
-      $scope.participation = newstatus;
-    }
     this.updatePetition = function(petition){
       socket.emit('petition:update', petition);
       $scope.petitions.pop(petition);
