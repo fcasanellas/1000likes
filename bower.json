@@ -12,6 +12,8 @@
       "fontawesome": "*",
       "angular-scroll-glue": "*",
       "twemoji": "*",
-      "angular-twemoji": "*"
+      "angular-twemoji": "*",
+      "angular-audio": "*",
+      "vminpoly" : "*"
     }
 }

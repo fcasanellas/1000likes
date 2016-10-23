@@ -51,7 +51,7 @@
     };
   });
 
-  app.controller('AdminController', function($scope, socket){
+  app.controller('AdminController', function($scope, socket, $timeout){
     //Define glued setting
     $scope.glued = true;
 
@@ -69,6 +69,7 @@
     $scope.beamerchats = {beamer: null, beamer2: null};
     $scope.users = {};
     $scope.actors = {};
+    $scope.messages_stack = [];
 
     //Load actors, users and groups
     socket.emit('user:load_by_role', 1);
@@ -161,6 +162,11 @@
     });
     //Recive message
     socket.on('message:new', function(message) {
+      //Messages Stack
+      $scope.messages_stack.push(message);
+      if ($scope.messages_stack.length > 5)
+        $scope.messages_stack.shift();
+      //Load in chatrooms
       angular.forEach($scope.current_chatroom, function(chatroom, key){
         if (chatroom != null) {
           if ((message.chat_id1==chatroom.id1) && (message.chat_id2==chatroom.id2)) {
@@ -219,12 +225,12 @@
       socket.emit('user:new', newuser);
     };
     this.loadUser = function(user, chatscreen) {
+      $scope.actorchats[chatscreen] = null;
+      $scope.userchats[chatscreen] = null;
+      $scope.groupchats[chatscreen] = null;
       if(($scope.current_user[chatscreen]) && ($scope.current_user[chatscreen].username == user.username)) {
         //Clean chatscreen
         $scope.current_user[chatscreen] = null;
-        $scope.actorchats[chatscreen] = null;
-        $scope.userchats[chatscreen] = null;
-        $scope.groupchats[chatscreen] = null;
       } else {
         //Load user in chatscreen
         $scope.current_user[chatscreen] = user;
@@ -237,18 +243,14 @@
     this.bulkUpdate = function(){
       for(var k in $scope.users) {
         var userstatus = parseInt($scope.users[k].status);
-        /*
         if (userstatus != 2 && userstatus != 3) {
           //L'Usuari no està bloquejat o està en Bypass
-          $scope.users[k].status = (newstatus) ? 1 : 0;
-          socket.emit('user:update', $scope.users[k]);
-        }*/
-        if (userstatus != 2) {
           $scope.users[k].status = $scope.bulk_status;
           socket.emit('user:update', $scope.users[k]);
         }
       }
       socket.emit('user:update_default_status', $scope.bulk_status);
+      $scope.petitions = [];
     }
 
     //CHAT FUNCTIONS
@@ -310,6 +312,25 @@
         $scope.beamerchats[chatscreen] = {id1: id1, id2: id2};
       }
     }
+    this.viewChat = function(author, id1, id2, chatscreen){
+      //Load author in current_user
+      if ($scope.actors[author]) this.loadUser($scope.actors[author], chatscreen);
+      if ($scope.users[author]) this.loadUser($scope.users[author], chatscreen);
+      var controller = this;
+      $('.modal-background').toggle();
+      setTimeout(function () {
+          if ($scope.actorchats[chatscreen] && $scope.actorchats[chatscreen][id1+'_'+id2]) {
+            controller.selectChatroom(id1, id2, chatscreen, $scope.actorchats[chatscreen][id1+'_'+id2].status);
+          }
+          if ($scope.userchats[chatscreen] && $scope.userchats[chatscreen][id1+'_'+id2]) {
+            controller.selectChatroom(id1, id2, chatscreen, $scope.userchats[chatscreen][id1+'_'+id2].status);
+          }
+          if ($scope.groupchats[chatscreen] && $scope.groupchats[chatscreen][id1+'_'+id2]) {
+            controller.selectChatroom(id1, id2, chatscreen, $scope.groupchats[chatscreen][id1+'_'+id2].status);
+          }
+          $('.modal-background').toggle();
+      }, 1000, controller);
+    }
 
     //MESSAGE FUNCTIONS
     this.sendMessage = function(chatscreen){
@@ -326,9 +347,9 @@
     };
 
     //PARTICIPATION FUNCTIONS
-    this.updatePetition = function(petition){
+    this.updatePetition = function(petition, index){
       socket.emit('petition:update', petition);
-      $scope.petitions.pop(petition);
+      $scope.petitions.splice(index, 1);
     };
   });
 })();

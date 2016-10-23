@@ -1,4 +1,10 @@
+
+$(window).resize(function() {
+    polyCalc.run();
+});
 $(window).load(function(){
+  polyCalc.run();
+
   $('.emoji-button').click(function(){
     $('.emoji-selector').toggle();
     resizeMessagePane();

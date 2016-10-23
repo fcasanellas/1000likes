@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute']);
+  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute', 'ngAudio']);
 
   //CONFIGURATION
   app.config(function(twemojiProvider) {
@@ -36,9 +36,12 @@
     };
   });
 
-  app.controller('BeamerController', function($scope, socket, $cookieStore, $route, $routeParams, $location){
+  app.controller('BeamerController', function($scope, socket, $cookieStore, $route, $routeParams, $location, ngAudio){
     //Define glued setting
     $scope.glued = true;
+
+    //Define message sound
+    $scope.message_sound = ngAudio.load("../sounds/tune1.mp3");
 
     //Define arrays
     $scope.current_chatroom = {beamer: null, beamer2: null};
@@ -62,11 +65,13 @@
     socket.on('message:new', function(message) {
       if ($scope.current_chatroom['beamer']) {
         if ((message.chat_id1==$scope.current_chatroom['beamer'].id1) && (message.chat_id2==$scope.current_chatroom['beamer'].id2)) {
+          $scope.message_sound.play();
           $scope.messages['beamer'].push(message);
         }
       }
       if ($scope.current_chatroom['beamer2']) {
         if ((message.chat_id1==$scope.current_chatroom['beamer2'].id1) && (message.chat_id2==$scope.current_chatroom['beamer2'].id2)) {
+          $scope.message_sound.play();
           $scope.messages['beamer2'].push(message);
         }
       }

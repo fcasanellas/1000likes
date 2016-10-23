@@ -1,41 +1,42 @@
 /*** VARIABLES ***/
 /*** GENERAL ***/
-/* line 8, ../sass/style.scss */
+/* line 23, ../sass/style.scss */
 body {
   background-color: #EBE8D7;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
   color: #42574B;
 }
-/* line 10, ../sass/style.scss */
+/* line 25, ../sass/style.scss */
 body.beamer {
   background-color: black;
 }
 
-/* line 15, ../sass/style.scss */
+/* line 30, ../sass/style.scss */
 a {
   color: #4A8262;
 }
 
-/* line 18, ../sass/style.scss */
+/* line 33, ../sass/style.scss */
 .app.list-group-item a {
   display: inline-block;
   width: calc(100vw - 65px);
   width: -moz-calc(100vw - 65px);
 }
 
-/* line 23, ../sass/style.scss */
+/* line 38, ../sass/style.scss */
 .btn-success {
   background-color: #4A8262;
 }
 
-/* line 26, ../sass/style.scss */
+/* line 41, ../sass/style.scss */
 .emoji {
   width: 28px;
+  max-height: 45px;
 }
 
 /*** APP ***/
-/* line 32, ../sass/style.scss */
+/* line 48, ../sass/style.scss */
 body.app .list-group-item a {
   display: inline-block;
   width: calc(100vw - 65px);
@@ -43,25 +44,25 @@ body.app .list-group-item a {
 }
 
 /*** MODAL ***/
-/* line 41, ../sass/style.scss */
+/* line 57, ../sass/style.scss */
 .modal .modal-dialog {
   width: 80%;
 }
-/* line 44, ../sass/style.scss */
+/* line 60, ../sass/style.scss */
 .modal .vertical-alignment-helper {
   display: table;
   height: 100%;
   width: 100%;
   pointer-events: none;
 }
-/* line 50, ../sass/style.scss */
+/* line 66, ../sass/style.scss */
 .modal .vertical-align-center {
   /* To center vertically */
   display: table-cell;
   vertical-align: middle;
   pointer-events: none;
 }
-/* line 56, ../sass/style.scss */
+/* line 72, ../sass/style.scss */
 .modal .modal-content {
   /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
   width: inherit;
@@ -70,36 +71,48 @@ body.app .list-group-item a {
   margin: 0 auto;
   pointer-events: all;
 }
-/* line 64, ../sass/style.scss */
+/* line 80, ../sass/style.scss */
 .modal .modal-body {
   text-align: center;
 }
-/* line 66, ../sass/style.scss */
+/* line 82, ../sass/style.scss */
 .modal .modal-body img {
   display: inline;
 }
 
 /*** NAVIGATION ***/
-/* line 73, ../sass/style.scss */
+/* line 89, ../sass/style.scss */
+.username {
+  background-color: #999;
+  color: white;
+  text-align: center;
+  height: 20px;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* line 99, ../sass/style.scss */
 .nav {
   background-color: #EBE8D7;
   width: 100%;
 }
-/* line 76, ../sass/style.scss */
+/* line 102, ../sass/style.scss */
 .nav.app {
   position: fixed;
   z-index: 1;
-  top: 0;
+  top: 20px;
 }
-/* line 81, ../sass/style.scss */
+/* line 107, ../sass/style.scss */
 .nav.nav-pills {
   border-bottom: 1px solid #ddd;
 }
-/* line 83, ../sass/style.scss */
+/* line 109, ../sass/style.scss */
 .nav.nav-pills li.active a {
   background-color: #4A8262;
 }
-/* line 87, ../sass/style.scss */
+/* line 113, ../sass/style.scss */
 .nav .participation-button {
   padding: 10px 15px;
   background-color: #4A8262;
@@ -107,83 +120,151 @@ body.app .list-group-item a {
 }
 
 /*** CONTENT ***/
-/* line 95, ../sass/style.scss */
+/* line 121, ../sass/style.scss */
 .chatscreen {
   background: url("/images/giftly.png") repeat scroll 0 0;
 }
 
-/* line 98, ../sass/style.scss */
+/* line 124, ../sass/style.scss */
 .undernav.app {
-  padding-top: 44px;
+  padding-top: 64px;
 }
-/* line 101, ../sass/style.scss */
+/* line 127, ../sass/style.scss */
 .undernav.app.chat-selector li.closed {
   display: none;
 }
 
-/* line 107, ../sass/style.scss */
+/* line 133, ../sass/style.scss */
 .chat-pane [scroll-glue] {
   overflow-y: scroll;
 }
-/* line 111, ../sass/style.scss */
-.chat-pane .message-pane.app, .chat-pane .message-pane.beamer, .chat-pane .message-pane.beamer2 {
-  /* margin-bottom: 65px; */
+/* line 137, ../sass/style.scss */
+.chat-pane .message-pane.app {
+  height: calc(100vh - 125px);
+  height: -moz-calc(100vh - 125px);
+  /*.csscalc.cssvhunit & {
+    height: 80vh;
+  }*/
+}
+/* line 140, ../sass/style.scss */
+.no-csscalc.no-cssvhunit .chat-pane .message-pane.app {
+  height: 80vh;
+}
+/* line 147, ../sass/style.scss */
+.chat-pane .message-pane.beamer, .chat-pane .message-pane.beamer2 {
   height: calc(100vh - 122px);
   height: -moz-calc(100vh - 122px);
 }
-/* line 116, ../sass/style.scss */
+/* line 151, ../sass/style.scss */
+.chat-pane .message-pane.admin, .chat-pane .message-pane.admin2 {
+  max-height: 625px;
+}
+/* line 154, ../sass/style.scss */
 .chat-pane .message-pane.app {
   margin-top: 60px;
 }
-/* line 117, ../sass/style.scss */
+/* line 155, ../sass/style.scss */
 .chat-pane .message-pane ul {
   padding: 0px;
 }
-/* line 120, ../sass/style.scss */
+/* line 158, ../sass/style.scss */
 .chat-pane .message-pane li {
   padding: 0.5rem;
   overflow: hidden;
   display: flex;
 }
-/* line 125, ../sass/style.scss */
+/* line 163, ../sass/style.scss */
 .chat-pane .message-pane .self {
   justify-content: flex-end;
   align-items: flex-end;
 }
-/* line 129, ../sass/style.scss */
+/* line 167, ../sass/style.scss */
 .chat-pane .message-pane .msg {
-  background: #fff;
+  background-color: #fff;
   min-width: 50px;
   padding: 10px;
   border-radius: 2px;
   max-width: 85%;
 }
-/* line 135, ../sass/style.scss */
+/* line 173, ../sass/style.scss */
 .chat-pane .message-pane .msg .user {
   font-size: 14px;
   color: #999;
   font-weight: bold;
 }
-/* line 140, ../sass/style.scss */
+/* line 178, ../sass/style.scss */
 .chat-pane .message-pane .msg .text {
   margin: 5px 0;
 }
-/* line 143, ../sass/style.scss */
+/* line 181, ../sass/style.scss */
 .chat-pane .message-pane .msg .date {
   font-size: 12px;
   color: #999;
 }
-/* line 148, ../sass/style.scss */
+/* line 186, ../sass/style.scss */
+.chat-pane .message-pane .Marta .msg {
+  background-color: #fceac2;
+}
+/* line 187, ../sass/style.scss */
+.chat-pane .message-pane .Xavi .msg {
+  background-color: #afffd7;
+}
+/* line 188, ../sass/style.scss */
+.chat-pane .message-pane .Jose .msg {
+  background-color: #f9ff91;
+}
+/* line 189, ../sass/style.scss */
+.chat-pane .message-pane .Lolo .msg {
+  background-color: #ffc9ff;
+}
+/* line 190, ../sass/style.scss */
+.chat-pane .message-pane .Mari .msg {
+  background-color: #dbffb2;
+}
+/* line 191, ../sass/style.scss */
+.chat-pane .message-pane .Lina .msg {
+  background-color: #f5ffaa;
+}
+/* line 192, ../sass/style.scss */
+.chat-pane .message-pane .Laia .msg {
+  background-color: #ccf6ff;
+}
+/* line 193, ../sass/style.scss */
+.chat-pane .message-pane .Jessi .msg {
+  background-color: #8ffcbb;
+}
+/* line 194, ../sass/style.scss */
+.chat-pane .message-pane .Mario .msg {
+  background-color: #edfcab;
+}
+/* line 195, ../sass/style.scss */
+.chat-pane .message-pane .Antonio .msg {
+  background-color: #bfffb2;
+}
+/* line 196, ../sass/style.scss */
+.chat-pane .message-pane .Paula .msg {
+  background-color: #a1fcde;
+}
+/* line 197, ../sass/style.scss */
+.chat-pane .message-pane .Lourdes .msg {
+  background-color: #fceac2;
+}
+/* line 198, ../sass/style.scss */
+.chat-pane .message-pane .Pere .msg {
+  background-color: #afffd7;
+}
+/* line 200, ../sass/style.scss */
 .chat-pane .message-pane .self .msg {
   border-bottom-right-radius: 0px;
   box-shadow: 1px 2px 0px #c1cbcd;
+  background-color: #aefcb2;
 }
-/* line 152, ../sass/style.scss */
+/* line 205, ../sass/style.scss */
 .chat-pane .message-pane .other .msg {
   border-top-left-radius: 0px;
   box-shadow: -1px 2px 0px #c1cbcd;
 }
-/* line 156, ../sass/style.scss */
+/* line 209, ../sass/style.scss */
 .chat-pane .message-pane .other:before {
   content: "";
   position: relative;
@@ -193,10 +274,69 @@ body.app .list-group-item a {
   width: 0px;
   height: 0px;
   border: 5px solid #fff;
+}
+/* line 218, ../sass/style.scss */
+.no-flexbox .chat-pane .message-pane .other:before {
+  display: none;
+}
+/* line 222, ../sass/style.scss */
+.chat-pane .message-pane .Marta:before {
+  border: 5px solid #fceac2;
+}
+/* line 223, ../sass/style.scss */
+.chat-pane .message-pane .Xavi:before {
+  border: 5px solid #afffd7;
+}
+/* line 224, ../sass/style.scss */
+.chat-pane .message-pane .Jose:before {
+  border: 5px solid #f9ff91;
+}
+/* line 225, ../sass/style.scss */
+.chat-pane .message-pane .Lolo:before {
+  border: 5px solid #ffc9ff;
+}
+/* line 226, ../sass/style.scss */
+.chat-pane .message-pane .Mari:before {
+  border: 5px solid #dbffb2;
+}
+/* line 227, ../sass/style.scss */
+.chat-pane .message-pane .Lina:before {
+  border: 5px solid #f5ffaa;
+}
+/* line 228, ../sass/style.scss */
+.chat-pane .message-pane .Laia:before {
+  border: 5px solid #ccf6ff;
+}
+/* line 229, ../sass/style.scss */
+.chat-pane .message-pane .Jessi:before {
+  border: 5px solid #8ffcbb;
+}
+/* line 230, ../sass/style.scss */
+.chat-pane .message-pane .Mario:before {
+  border: 5px solid #edfcab;
+}
+/* line 231, ../sass/style.scss */
+.chat-pane .message-pane .Antonio:before {
+  border: 5px solid #bfffb2;
+}
+/* line 232, ../sass/style.scss */
+.chat-pane .message-pane .Paula:before {
+  border: 5px solid #a1fcde;
+}
+/* line 233, ../sass/style.scss */
+.chat-pane .message-pane .Lourdes:before {
+  border: 5px solid #fceac2;
+}
+/* line 234, ../sass/style.scss */
+.chat-pane .message-pane .Pere:before {
+  border: 5px solid #afffd7;
+}
+/* line 235, ../sass/style.scss */
+.chat-pane .message-pane .other:before {
   border-left-color: transparent;
   border-bottom-color: transparent;
 }
-/* line 168, ../sass/style.scss */
+/* line 239, ../sass/style.scss */
 .chat-pane .message-pane .self:after {
   content: "";
   position: relative;
@@ -206,20 +346,31 @@ body.app .list-group-item a {
   right: 0px;
   width: 0px;
   height: 0px;
-  border: 5px solid #fff;
+  border: 5px solid #aefcb2;
   border-right-color: transparent;
   border-top-color: transparent;
   box-shadow: 0px 2px 0px #c1cbcd;
 }
-
-/* line 184, ../sass/style.scss */
-.chat-form {
-  height: 60px;
-  margin-top: 10px;
-  padding: 0 15px 10px 15px;
-  width: 100%;
+/* line 252, ../sass/style.scss */
+.no-flexbox .chat-pane .message-pane .self:after {
+  display: none;
 }
-/* line 189, ../sass/style.scss */
+/* line 256, ../sass/style.scss */
+.chat-pane .message-pane .label {
+  font-size: 20px;
+  margin: 10px auto;
+}
+
+/* line 262, ../sass/style.scss */
+.chat-form {
+  height: 50px;
+  margin-top: 10px;
+  padding: 0 15px;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+}
+/* line 269, ../sass/style.scss */
 .chat-form .emoji-button {
   color: #999;
   background-color: transparent;
@@ -227,16 +378,17 @@ body.app .list-group-item a {
   width: 33px;
   display: inline;
 }
-/* line 196, ../sass/style.scss */
+/* line 276, ../sass/style.scss */
 .chat-form input {
   width: -moz-calc(100% - 77px);
   width: calc(100% - 77px);
   height: 39px;
 }
-/* line 201, ../sass/style.scss */
+/* line 281, ../sass/style.scss */
+.chat-form .text-field,
 .chat-form .text-input {
-  width: -moz-calc(100% - 82px);
-  width: calc(100% - 82px);
+  width: -moz-calc(100% - 44px);
+  width: calc(100% - 44px);
   min-height: 39px;
   -moz-appearance: textfield;
   -webkit-appearance: textfield;
@@ -247,12 +399,18 @@ body.app .list-group-item a {
   padding: 8px 3px;
   display: inline;
 }
-/* line 213, ../sass/style.scss */
+/* line 285, ../sass/style.scss */
+.no-csscalc .chat-form .text-field, .no-csscalc
+.chat-form .text-input {
+  width: 200px;
+}
+/* line 297, ../sass/style.scss */
+.chat-form .text-field.non-editable,
 .chat-form .text-input.non-editable {
   width: 100%;
   background-color: #EBE8D7;
 }
-/* line 218, ../sass/style.scss */
+/* line 302, ../sass/style.scss */
 .chat-form button {
   width: 44px;
   height: 41px;
@@ -260,7 +418,7 @@ body.app .list-group-item a {
   display: inline;
 }
 
-/* line 225, ../sass/style.scss */
+/* line 309, ../sass/style.scss */
 .emoji-selector {
   display: none;
   bottom: 0px;
@@ -269,32 +427,32 @@ body.app .list-group-item a {
   background-color: #EBE8D7;
   padding: 10px;
 }
-/* line 232, ../sass/style.scss */
+/* line 316, ../sass/style.scss */
 .emoji-selector.app {
   position: fixed;
 }
-/* line 235, ../sass/style.scss */
+/* line 319, ../sass/style.scss */
 .emoji-selector .nav {
   position: relative;
 }
-/* line 237, ../sass/style.scss */
+/* line 321, ../sass/style.scss */
 .emoji-selector .nav .fa-1bx {
   font-size: 1.5em;
 }
-/* line 238, ../sass/style.scss */
+/* line 322, ../sass/style.scss */
 .emoji-selector .nav a {
   padding: 5px 10px;
 }
-/* line 240, ../sass/style.scss */
+/* line 324, ../sass/style.scss */
 .emoji-selector .undernav {
   padding-top: 10px;
 }
-/* line 242, ../sass/style.scss */
+/* line 326, ../sass/style.scss */
 .emoji-selector .undernav .emoji-pane {
   height: 170px;
   overflow-y: scroll;
 }
-/* line 247, ../sass/style.scss */
+/* line 331, ../sass/style.scss */
 .emoji-selector .emoji-injector {
   width: 40px;
   height: 40px;
@@ -303,18 +461,92 @@ body.app .list-group-item a {
 }
 
 /*** BEAMER ***/
-/* line 257, ../sass/style.scss */
+/* line 340, ../sass/style.scss */
+body.beamer {
+  font-size: 22px;
+}
+/* line 342, ../sass/style.scss */
 body.beamer #wrapper {
   text-align: center;
 }
-/* line 258, ../sass/style.scss */
+/* line 343, ../sass/style.scss */
 body.beamer .chat-pane {
   text-align: left;
 }
-/* line 259, ../sass/style.scss */
+/* line 344, ../sass/style.scss */
 body.beamer .chatscreen {
   border-radius: 5px;
   display: inline-block;
   width: 500px;
-  margin: 0px 20px;
+  width: -moz-calc(50% - 40px);
+  width: calc(50% - 40px);
+  margin: 40px 20px 0px 20px;
+}
+/* line 351, ../sass/style.scss */
+body.beamer .chatscreen .chat-pane .message-pane .msg {
+  max-width: 90%;
+}
+
+/*** ADMIN ***/
+/* line 358, ../sass/style.scss */
+.modal-background {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 4;
+  position: fixed;
+  display: none;
+}
+
+/* line 366, ../sass/style.scss */
+.loading-content {
+  top: 32%;
+  left: -100px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  margin-left: 50%;
+  position: absolute;
+}
+
+/* line 376, ../sass/style.scss */
+.loading-circle {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: transparent;
+  border-top-left-radius: 110px;
+  border-top-right-radius: 110px;
+  border: 1px solid #FFF;
+  border-bottom: 0;
+  -webkit-animation: loading 1.5s linear infinite;
+  animation: loading 1.5s linear infinite;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform-origin: 50% 100%;
+}
+
+@-webkit-keyframes loading {
+  from {
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes loading {
+  from {
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

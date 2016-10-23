@@ -6,7 +6,7 @@
 var express = require ('express');
 var app = express();
 var mongoose = require('mongoose');
-var port = 8080;
+var port = 3000;
 
 //CONFIGURATION
 mongoose.connect("mongodb://127.0.0.1:27017/1000Likes_v03"); //connect to MongoDB
@@ -99,6 +99,7 @@ setTimeout(function() {
 
 //EXPRESS ROUTES
 app.get("/", function(req, res){
+    console.log('PAGE REQUEST');
     res.render("page");
 });
 app.get("/admin", function(req, res){
@@ -119,7 +120,7 @@ var sockettree = {
   "users" : {},
   "actors" : {}
 };
-io.set('log level', 1); // reduce logging
+//io.set('log level', 2); // reduce logging
 io.sockets.on('connection', function (socket) {
 
     //Check device and store socket
@@ -238,6 +239,10 @@ io.sockets.on('connection', function (socket) {
           });
         });
         socket.emit('user:new', user);
+        //DEBUG ********************************
+        console.log(user);
+        socket.emit('user:created', data.username);
+        // ************************************
         if(sockettree.admin) sockettree.admin.emit('user:new', user);
         //Store socket in sockettree
         sockettree.users[data.username] = socket;
@@ -333,7 +338,7 @@ io.sockets.on('connection', function (socket) {
     });
     //Get all messages of a chatroom
     socket.on('message:loadchatroom', function (data) {
-      Message.find({'chat_id1': data.id1, 'chat_id2': data.id2},function(err, res) {
+      Message.find({'chat_id1': data.id1, 'chat_id2': data.id2}).sort({created: 'asc'}).exec(function(err, res) {
         socket.emit('message:loadchatroom', res, data.chatscreen);
       });
     });
@@ -345,21 +350,21 @@ io.sockets.on('connection', function (socket) {
       Message.find({chat_id1: chat.id1, chat_id2: chat.id2}).remove(function(err, msg){});
 
       //Load default messages
-      loadMessages(messages, data.position-1, chat);
-      /*
+      var date =  new Date();
+      var time = date.getTime();
       for(var i=0; i<data.position; i++){
-        //Store it to database
+        var date =  new Date(time+i);
         var newMsg = new Message({
-          created: new Date(),
+          created: date,
           author: messages[i].author,
           chat_id1: chat.id1,
           chat_id2: chat.id2,
           text: messages[i].text
         });
         //Save it to database
-        newMsg.save(function(err, msg){ console.log(msg); });
-        setTimeout(function(){console.log('TEST');}, 1000);
-      }*/
+        newMsg.save(function(err, msg){});
+      }
+
       //Update created value of the chatroom
       Chat.update({id1: chat.id1, id2: chat.id2}, {created: new Date()}, null, function(err, numAffected){});
       //Alert to reload if this is the current chatroom
@@ -375,22 +380,6 @@ io.sockets.on('connection', function (socket) {
       chat_index[data.id].position = data.position;
       if(sockettree.admin) sockettree.admin.emit('chat:update_defaults_position', data.id, data.position);
     });
-
-    /*
-     * Store an stack of messages in order
-     */
-     function loadMessages(messages, position, chat) {
-       if ( position >= 0) {
-         var newMsg = new Message({
-           created: new Date(),
-           author: messages[position].author,
-           chat_id1: chat.id1,
-           chat_id2: chat.id2,
-           text: messages[position].text
-         });
-         newMsg.save(setTimeout(loadMessages(messages, position-1, chat), 5000));
-       }
-     }
 
     //Increase default chat position
     socket.on('message:increase_default_chat', function (data) {
@@ -425,7 +414,7 @@ io.sockets.on('connection', function (socket) {
     //Send messages to beamer
     socket.on('message:sendtobeamer', function (data) {
       if(data.id1 && data.id2) {
-        Message.find({'chat_id1': data.id1, 'chat_id2': data.id2},function(err, res) {
+        Message.find({'chat_id1': data.id1, 'chat_id2': data.id2}).sort({created: 'asc'}).exec(function(err, res) {
           if (sockettree.beamer != null) {
             sockettree.beamer.emit('message:loadchatroom', res, data.chatscreen, data);
           }

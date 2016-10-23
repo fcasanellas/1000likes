@@ -5,7 +5,7 @@ html(lang="ca")
     title="1000Likes"
     link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/style.css', data-PolyCalc="1")
     script(src='/libs/angular/angular.js')
     script(src='/libs/angular-cookies/angular-cookies.js')
     script(src='/libs/angular-sanitize/angular-sanitize.js')
@@ -13,6 +13,7 @@ html(lang="ca")
     script(src='/libs/twemoji/twemoji.js')
     script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
     script(src='/libs/angular-scroll-glue/src/scrollglue.js')
+    script(src='/libs/modernizr/modernizr-custom.js')
     script(src='/socket.io/socket.io.js')
     script(src='/js/app.js')
     script(src='/js/functions.js')
@@ -96,7 +97,7 @@ html(lang="ca")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupOpen.svg")
-              h4 Ja pots participar. Clica a la bafarada de la dreta
+              h4 Ja pots demanar participar. Clica a la bafarada de la dreta
     .modal.fade#userBypass(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -157,4 +158,15 @@ html(lang="ca")
                   &nbsp;
                   button.btn.btn-lg.btn-block(type="submit")
                     | Envia
+    .username
+      span
+        | El teu nom d'usuari és &nbsp;
+        b
+          {{current_user.app.username}}
     +chatscreen("app")
+    script(src='/js/vminpoly.js')
+    script(src='/libs/vminpoly/tokenizer.js')
+    script(src='/libs/vminpoly/parser.js')
+    script(src='/libs/vminpoly/vminpoly.js')
+    script.
+      //alert(document.getElementsByTagName('html')[0].className);

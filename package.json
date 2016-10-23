@@ -8,6 +8,6 @@
     "express" : "~4.7.2",
     "mongoose" : "~3.6.2",
     "jade" : "~0.31.2",
-    "socket.io" : "~0.9.16"
+    "socket.io" : "1.0"
   }
 }

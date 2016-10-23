@@ -20,18 +20,21 @@ html(lang="ca" )
     script(src='/libs/jquery-resize/jquery.ba-resize.min.js')
     script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
     script(src='/js/jquery-script.js')
+    .loading.modal-background
+      .loading-content
+        .loading-circle
     nav.navbar.navbar-default
       .container-fluid
         .navbar-header
           a.navbar-brand
-            | 1000Likes - Admin interface
+            | 1000Likes - Administració
         .collapse.navbar-collapse.navbar-right
           | Estat general &nbsp;
           select(ng-model="bulk_status", ng-change="Ctrl.bulkUpdate()")
-            option(value=0, ng-selected="bulk_status==0") Actiu
-            option(value=1, ng-selected="bulk_status==1") Participació oberta
+            option(value=0, ng-selected="bulk_status==0") Lectura
+            option(value=1, ng-selected="bulk_status==1") Pot demanar permís
             option(value=2, ng-selected="bulk_status==2") Bloquejat
-            option(value=3, ng-selected="bulk_status==3") Bypass
+            option(value=3, ng-selected="bulk_status==3") Accés total
           | &nbsp;
           button.btn.btn-default.navbar-btn.btn-primary(ng-class="{disabled: beamerchats.beamer == null}", ng-click='beamerchats.beamer == null || Ctrl.sendToBeamer(beamerchats.beamer.id1, beamerchats.beamer.id2, "beamer")')
             i.fa.fa-desktop.fa-1x
@@ -47,25 +50,30 @@ html(lang="ca" )
         .col-md-8
           .panel.panel-primary
             .panel-heading
-              | Load data
+              | Carregar converses
             .panel-body
               include ./admin/defaults.jade
+          .panel.panel-primary
+            .panel-heading
+              | Monitor
+            .panel-body
+              include ./admin/monitor.jade
         .col-md-4
           .panel.panel-primary
             .panel-heading
-              | Participation
+              | Participació
             .panel-body
               include ./admin/participation.jade
       .row
         .col-md-6
           .panel.panel-primary
             .panel-heading
-              | Structures
+              | Usuaris
             .panel-body
               include ./admin/structures.jade
         .col-md-6
           .panel.panel-primary
             .panel-heading
-              | Admin viewer
+              | Visualitzador
             .panel-body
               include ./admin/chat-screen.jade

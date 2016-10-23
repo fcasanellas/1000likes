@@ -1,19 +1,19 @@
 .main-menu
   ul.nav.nav-pills
     li.active
-      a(data-toggle="pill",href="#actor",ng-click="Ctrl.resetChats()") Actors
+      a(data-toggle="pill",href="#actor",ng-click="Ctrl.resetChats()") Personatges
     li
-      a(data-toggle="pill",href="#user",ng-click="Ctrl.resetChats()") Users
+      a(data-toggle="pill",href="#user",ng-click="Ctrl.resetChats()") Públic
     li
-      a(data-toggle="pill",href="#group",ng-click="Ctrl.resetChats()") Groups
+      a(data-toggle="pill",href="#group",ng-click="Ctrl.resetChats()") Grups
   .tab-content
     #actor.tab-pane.fade.in.active
       table.table.table-striped
         thead
           tr
-            th Username
-            th Status
-            th Actions
+            th Usuari
+            th Tipus de participació
+            th Accions
         tbody
           tr(ng-model="actors", ng-repeat="actor in actors")
             td {{actor.username}}
@@ -48,18 +48,18 @@
       table.table.table-striped
         thead
           tr
-            th Username
-            th Status
-            th Actions
+            th Usuari
+            th Tipus de participació
+            th Accions
         tbody
-          tr(ng-model="users", ng-repeat="(username, user) in users | orderObjectBy: 'status' : true", ng-class="{'success' : user.status == 3}")
+          tr(ng-model="users", ng-repeat="(username, user) in users | orderObjectBy: 'status' : true", ng-class="{'success' : user.status == 3, 'danger' : user.status == 2}")
             td {{user.username}}
             td
               select(ng-model="user.status", ng-change="Ctrl.changeUserStatus(user)")
-                option(value=0, ng-selected="user.status==0") Actiu
-                option(value=1, ng-selected="user.status==1") Participació oberta
+                option(value=0, ng-selected="user.status==0") Lectura
+                option(value=1, ng-selected="user.status==1") Pot demanar permís
                 option(value=2, ng-selected="user.status==2") Bloquejat
-                option(value=3, ng-selected="user.status==3") Bypass
+                option(value=3, ng-selected="user.status==3") Accés total
             td
               .btn-group.btn-group-xs
                 button.btn.btn-default(ng-click="Ctrl.loadUser(user, 'admin')", ng-class="{'btn-danger':current_user.admin.username==user.username}")

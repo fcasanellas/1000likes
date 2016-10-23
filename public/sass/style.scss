@@ -4,6 +4,21 @@ $dark-green: #42574B;
 $gray: #EBE8D7;
 $dark-gray: #999;
 
+$self-msg: #aefcb2;
+$marta-msg: #fceac2;
+$xavi-msg: #afffd7;
+$jose-msg: #f9ff91;
+$lolo-msg: #ffc9ff;
+$mari-msg: #dbffb2;
+$lina-msg: #f5ffaa;
+$laia-msg: #ccf6ff;
+$jessi-msg: #8ffcbb;
+$mario-msg: #edfcab;
+$antonio-msg: #bfffb2;
+$paula-msg: #a1fcde;
+$lourdes-msg: #fceac2;
+$pere-msg: #afffd7;
+
 /*** GENERAL ***/
 body {
   background-color: $gray;
@@ -24,7 +39,8 @@ a {
   background-color: $soft-green;
 }
 .emoji {
-  width: 28px;
+  width:28px;
+  max-height:45px;
 }
 
 /*** APP ***/
@@ -70,13 +86,23 @@ body.app {
 }
 
 /*** NAVIGATION ***/
+.username {
+  background-color: $dark-gray;
+  color: white;
+  text-align: center;
+  height: 20px;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 .nav {
   background-color: $gray;
   width: 100%;
   &.app {
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 20px;
   }
   &.nav-pills {
     border-bottom: 1px solid #ddd;
@@ -96,7 +122,7 @@ body.app {
   background: url("/images/giftly.png") repeat scroll 0 0;
 }
 .undernav.app {
-  padding-top: 44px;
+  padding-top: 64px;
   &.chat-selector {
     li.closed {
       display: none;
@@ -108,10 +134,22 @@ body.app {
     overflow-y: scroll;
   }
   .message-pane {
-    &.app, &.beamer, &.beamer2 {
-      /* margin-bottom: 65px; */
+    &.app {
+      height: calc(100vh - 125px);
+      height: -moz-calc(100vh - 125px);
+      .no-csscalc.no-cssvhunit & {
+        height: 80vh;
+      }
+      /*.csscalc.cssvhunit & {
+        height: 80vh;
+      }*/
+    }
+    &.beamer, &.beamer2 {
       height: calc(100vh - 122px);
       height: -moz-calc(100vh - 122px);
+    }
+    &.admin, &.admin2 {
+      max-height: 625px;
     }
     &.app { margin-top: 60px; }
     ul {
@@ -127,7 +165,7 @@ body.app {
       align-items: flex-end;
     }
     .msg {
-      background: #fff;
+      background-color: #fff;
       min-width: 50px;
       padding: 10px;
       border-radius: 2px;
@@ -145,9 +183,24 @@ body.app {
         color: $dark-gray;
       }
     }
+    .Marta .msg { background-color: $marta-msg; }
+    .Xavi .msg { background-color: $xavi-msg; }
+    .Jose .msg { background-color: $jose-msg; }
+    .Lolo .msg { background-color: $lolo-msg; }
+    .Mari .msg { background-color: $mari-msg; }
+    .Lina .msg { background-color: $lina-msg; }
+    .Laia .msg { background-color: $laia-msg; }
+    .Jessi .msg { background-color: $jessi-msg; }
+    .Mario .msg { background-color: $mario-msg; }
+    .Antonio .msg { background-color: $antonio-msg; }
+    .Paula .msg { background-color: $paula-msg; }
+    .Lourdes .msg { background-color: $lourdes-msg; }
+    .Pere .msg { background-color: $pere-msg; }
+
     .self .msg {
       border-bottom-right-radius: 0px;
       box-shadow: 1px 2px 0px #c1cbcd;
+      background-color: $self-msg;
     }
     .other .msg {
       border-top-left-radius: 0px;
@@ -162,6 +215,24 @@ body.app {
       width: 0px;
       height: 0px;
       border: 5px solid #fff;
+      .no-flexbox & {
+        display: none;
+      }
+    }
+    .Marta:before { border: 5px solid $marta-msg; }
+    .Xavi:before { border: 5px solid $xavi-msg; }
+    .Jose:before { border: 5px solid $jose-msg; }
+    .Lolo:before { border: 5px solid $lolo-msg; }
+    .Mari:before { border: 5px solid $mari-msg; }
+    .Lina:before { border: 5px solid $lina-msg; }
+    .Laia:before { border: 5px solid $laia-msg; }
+    .Jessi:before { border: 5px solid $jessi-msg; }
+    .Mario:before { border: 5px solid $mario-msg; }
+    .Antonio:before { border: 5px solid $antonio-msg; }
+    .Paula:before { border: 5px solid $paula-msg; }
+    .Lourdes:before { border: 5px solid $lourdes-msg; }
+    .Pere:before { border: 5px solid $pere-msg; }
+    .other:before {
       border-left-color: transparent;
       border-bottom-color: transparent;
     }
@@ -174,18 +245,27 @@ body.app {
       right: 0px;
       width: 0px;
       height: 0px;
-      border: 5px solid #fff;
+      border: 5px solid $self-msg;
       border-right-color: transparent;
       border-top-color: transparent;
       box-shadow: 0px 2px 0px #c1cbcd;
+      .no-flexbox & {
+        display: none;
+      }
+    }
+    .label {
+      font-size: 20px;
+      margin: 10px auto;
     }
   }
 }
 .chat-form {
-  height: 60px;
+  height: 50px;
   margin-top: 10px;
-  padding: 0 15px 10px 15px;
+  padding: 0 15px;
   width: 100%;
+  position: fixed;
+  bottom: 0px;
   .emoji-button {
     color: $dark-gray;
     background-color: transparent;
@@ -198,9 +278,13 @@ body.app {
     width:calc(100% - 77px);
     height: 39px;
   }
+  .text-field,
   .text-input {
-    width:-moz-calc(100% - 82px);
-    width:calc(100% - 82px);
+    width:-moz-calc(100% - 44px);
+    width:calc(100% - 44px);
+    .no-csscalc & {
+      width: 200px;
+    }
     min-height: 39px;
     -moz-appearance: textfield;
     -webkit-appearance: textfield;
@@ -254,12 +338,81 @@ body.app {
 
 /*** BEAMER ***/
 body.beamer {
+  font-size: 22px;
   #wrapper { text-align: center; }
   .chat-pane { text-align: left; }
   .chatscreen {
     border-radius: 5px;
     display: inline-block;
     width: 500px;
-    margin: 0px 20px;
+    width:-moz-calc(50% - 40px);
+    width:calc(50% - 40px);
+    margin: 40px 20px 0px 20px;
+    .chat-pane .message-pane .msg {
+      max-width: 90%;
+    }
   }
+}
+
+/*** ADMIN ***/
+.modal-background {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);;
+  z-index: 4;
+  position: fixed;
+  display: none;
+}
+.loading-content {
+    top: 32%;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    margin-left: 50%;
+    position: absolute;
+}
+
+.loading-circle {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    background-color: transparent;
+    border-top-left-radius: 110px;
+    border-top-right-radius: 110px;
+    border: 1px solid #FFF;
+    border-bottom: 0;
+
+    -webkit-animation: loading 1.5s linear infinite;
+    animation: loading 1.5s linear infinite;
+
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform-origin: 50% 100%;
+}
+
+@-webkit-keyframes loading {
+    from {
+    	-ms-transform: rotate(0deg);
+	    -webkit-transform: rotate(0deg);
+	    transform: rotate(0deg);
+    }
+    to {
+    	-ms-transform: rotate(360deg);
+	    -webkit-transform: rotate(360deg);
+	    transform: rotate(360deg);
+    }
+}
+
+@keyframes loading {
+    from {
+    	-ms-transform: rotate(0deg);
+	    -webkit-transform: rotate(0deg);
+	    transform: rotate(0deg);
+    }
+    to {
+    	-ms-transform: rotate(360deg);
+	    -webkit-transform: rotate(360deg);
+	    transform: rotate(360deg);
+    }
 }
