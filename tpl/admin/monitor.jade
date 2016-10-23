@@ -1,0 +1,22 @@
+table.table.table-striped
+  thead
+    tr
+      th De
+      th A
+      th Missatge
+      th Accions
+  tbody
+    tr(ng-model="messages_stack", ng-repeat="message in messages_stack | orderBy:'-created'")
+      td {{message.author}}
+      td {{message.chat_id1}}
+      td {{message.text | limitTo : 50}} ...
+      td
+        .btn-group.btn-group-xs
+          button.btn.btn-default(ng-if="message.chat_id2 == 'GROUP'", ng-click="Ctrl.viewChat(message.author, message.chat_id1, message.chat_id2, 'admin')", ng-class="{'btn-danger':current_user.admin.username==message.author}")
+            i.fa.fa-eye.fa-1x
+          button.btn.btn-default(ng-if="message.chat_id2 != 'GROUP'", ng-click="Ctrl.viewChat(message.chat_id1, message.chat_id1, message.chat_id2, 'admin')", ng-class="{'btn-danger':current_user.admin.username==message.chat_id1}")
+            i.fa.fa-eye.fa-1x
+          button.btn.btn-default(ng-if="message.chat_id2 == 'GROUP'", ng-click="Ctrl.viewChat(message.author, message.chat_id1, message.chat_id2, 'admin2')", ng-class="{'btn-danger':current_user.admin2.username==message.author}")
+            i.fa.fa-eye.fa-1x
+          button.btn.btn-default(ng-if="message.chat_id2 != 'GROUP'", ng-click="Ctrl.viewChat(message.chat_id1, message.chat_id1, message.chat_id2, 'admin2')", ng-class="{'btn-danger':current_user.admin2.username==message.chat_id1}")
+            i.fa.fa-eye.fa-1x
