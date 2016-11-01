@@ -411,6 +411,28 @@ io.sockets.on('connection', function (socket) {
       chat_index[data.id].position = data.position + 1;
       if(sockettree.admin) sockettree.admin.emit('chat:update_defaults_position', data.id, data.position + 1);
     });
+
+    //Send a default message
+    socket.on('message:senddefault', function (data) {
+      var messages = require('./default_data/default_messages.json');
+      var message = messages[data.pos];
+      var newMsg = new Message({
+        created: new Date(),
+        author: message.author,
+        chat_id1: message.author,
+        chat_id2: data.username,
+        text: message.text
+      });
+      //Save it to database
+      newMsg.save(function(err, msg){
+        //Propagate
+        if(sockettree.actors[message.author]) sockettree.actors[message.author].emit('message:new', msg);
+        if(sockettree.beamer) sockettree.beamer.emit('message:new', msg);
+        if(sockettree.admin) sockettree.admin.emit('message:new', msg);
+      });
+      console.log(newMsg);
+    });
+
     //Send messages to beamer
     socket.on('message:sendtobeamer', function (data) {
       if(data.id1 && data.id2) {

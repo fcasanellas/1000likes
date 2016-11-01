@@ -345,6 +345,10 @@
       $('.text-input#'+chatscreen).text('');
       socket.emit('message:new', newmessage);
     };
+    this.defaultMessage = function(username, pos) {
+      socket.emit('message:senddefault', {username: username, pos:pos});
+      this.sendToBeamer('Lina', username, 'beamer');
+    };
 
     //PARTICIPATION FUNCTIONS
     this.updatePetition = function(petition, index){
