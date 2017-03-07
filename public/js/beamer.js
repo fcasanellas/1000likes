@@ -67,12 +67,14 @@
         if ((message.chat_id1==$scope.current_chatroom['beamer'].id1) && (message.chat_id2==$scope.current_chatroom['beamer'].id2)) {
           $scope.message_sound.play();
           $scope.messages['beamer'].push(message);
+          $('.message-pane.beamer').animate({ scrollTop: $('.message-pane.beamer ul').height()-$('.message-pane.beamer').height()+400 })
         }
       }
       if ($scope.current_chatroom['beamer2']) {
         if ((message.chat_id1==$scope.current_chatroom['beamer2'].id1) && (message.chat_id2==$scope.current_chatroom['beamer2'].id2)) {
           $scope.message_sound.play();
           $scope.messages['beamer2'].push(message);
+          $('.message-pane.beamer2').animate({ scrollTop: $('.message-pane.beamer2 ul').height()-$('.message-pane.beamer2').height()+400 })
         }
       }
     });
