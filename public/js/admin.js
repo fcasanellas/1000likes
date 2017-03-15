@@ -243,8 +243,8 @@
     this.bulkUpdate = function(){
       for(var k in $scope.users) {
         var userstatus = parseInt($scope.users[k].status);
-        if (userstatus != 2 && userstatus != 3) {
-          //L'Usuari no està bloquejat o està en Bypass
+        if (userstatus != 2) {
+          //L'Usuari no està bloquejat
           $scope.users[k].status = $scope.bulk_status;
           socket.emit('user:update', $scope.users[k]);
         }
