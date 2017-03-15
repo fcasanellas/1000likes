@@ -1,8 +1,8 @@
 include mixins
 doctype
-html(lang="ca")
+html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
   head
-    title="1000Likes"
+    title="{{current_user.app.username}} - 1000Likes"
     link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css', data-PolyCalc="1")
@@ -21,7 +21,7 @@ html(lang="ca")
     meta(name='mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-capable',content='yes')
 
-  body.app(ng-app="1000likes", ng-controller="AppController as Ctrl")
+  body.app
     script(src='/libs/jquery/dist/jquery.min.js')
     script(src='/libs/jquery-resize/jquery.ba-resize.min.js')
     script(src='/libs/bootstrap/dist/js/bootstrap.min.js')
