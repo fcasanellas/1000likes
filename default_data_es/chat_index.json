@@ -1,0 +1,138 @@
+{ "schema" : [
+    ["xavi_jose", "xavi_mare", "marta_pare", "marta_xavi", "xavi_lolo"],
+    ["lolo_mari", "lina_laia", "lina_paula", "lina_f1k3r", "lina_m3m0"],
+    ["group_classe", "group_pantalina", "group_profes"]
+  ],
+  "chats" : {
+    "xavi_jose":
+    {
+      "id1" : "Xavi",
+      "id2" : "Jose",
+      "category" : 2,
+      "status" : 0,
+      "file" : "xavi_jose.json",
+      "position" : 0,
+      "total" : 2
+    },
+    "xavi_mare":
+    {
+      "id1" : "Xavi",
+      "id2" : "Mare",
+      "category" : 2,
+      "status" : 0,
+      "file" : "xavi_mare.json",
+      "position" : 0,
+      "total" : 3
+    },
+    "marta_pare":
+    {
+      "id1" : "Marta",
+      "id2" : "Pare",
+      "category" : 2,
+      "status" : 0,
+      "file" : "marta_pare.json",
+      "position" : 0,
+      "total" : 2
+    },
+    "marta_xavi":
+    {
+      "id1" : "Marta",
+      "id2" : "Xavi",
+      "category" : 2,
+      "status" : 0,
+      "file" : "marta_xavi.json",
+      "position" : 0,
+      "total" : 7
+    },
+    "xavi_lolo":
+    {
+      "id1" : "Xavi",
+      "id2" : "Lolo",
+      "category" : 2,
+      "status" : 0,
+      "file" : "xavi_lolo.json",
+      "position" : 0,
+      "total" : 6
+    },
+    "lolo_mari":
+    {
+      "id1" : "Lolo",
+      "id2" : "Mari",
+      "category" : 2,
+      "status" : 0,
+      "file" : "lolo_mari.json",
+      "position" : 0,
+      "total" : 3
+    },
+    "lina_laia":
+    {
+      "id1" : "Lina",
+      "id2" : "Laia",
+      "category" : 2,
+      "status" : 0,
+      "file" : "lina_laia.json",
+      "position" : 0,
+      "total" : 6
+    },
+    "lina_paula":
+    {
+      "id1" : "Lina",
+      "id2" : "Paula",
+      "category" : 2,
+      "status" : 0,
+      "file" : "lina_paula.json",
+      "position" : 0,
+      "total" : 10
+    },
+    "lina_f1k3r":
+    {
+      "id1" : "Lina",
+      "id2" : "F1k3r",
+      "category" : 2,
+      "status" : 0,
+      "file" : "lina_f1k3r.json",
+      "position" : 0,
+      "total" : 8
+    },
+    "lina_m3m0":
+    {
+      "id1" : "Lina",
+      "id2" : "M3m0",
+      "category" : 2,
+      "status" : 0,
+      "file" : "lina_m3m0.json",
+      "position" : 0,
+      "total" : 7
+    },
+    "group_classe":
+    {
+      "id1" : "Grup de classe",
+      "id2" : "GROUP",
+      "category" : 1,
+      "status" : 2,
+      "file" : "group_classe.json",
+      "position" : 0,
+      "total" : 46
+    },
+    "group_pantalina":
+    {
+      "id1" : "Fans de Pantalina",
+      "id2" : "GROUP",
+      "category" : 1,
+      "status" : 1,
+      "file" : "group_pantalina.json",
+      "position" : 0,
+      "total" : 38
+    },
+    "group_profes":
+    {
+      "id1" : "SexyProfes",
+      "id2" : "GROUP",
+      "category" : 1,
+      "status" : 1,
+      "file" : "group_profes.json",
+      "position" : 0,
+      "total" : 5
+    }
+  }
+}

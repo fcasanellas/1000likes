@@ -1,0 +1,87 @@
+[
+  {
+    "username" : "Marta",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Xavi",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Jose",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Mare",
+    "role" : 1,
+    "status" : 1
+  },
+  {
+    "username" : "Pare",
+    "role" : 1,
+    "status" : 1
+  },
+  {
+    "username" : "Lolo",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Mari",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Lina",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Laia",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Jessi",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Mario",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Antonio",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "Paula",
+    "role" : 1,
+    "status" : 2
+  },
+  {
+    "username" : "F1k3r",
+    "role" : 1,
+    "status" : 1
+  },
+  {
+    "username" : "M3m0",
+    "role" : 1,
+    "status" : 1
+  },
+  {
+    "username" : "Lourdes",
+    "role" : 1,
+    "status" : 1
+  },
+  {
+    "username" : "Pere",
+    "role" : 1,
+    "status" : 1
+  }
+]

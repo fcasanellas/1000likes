@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute']);
+  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute', 'pascalprecht.translate']);
 
   //CONFIGURATION
   app.config(function(twemojiProvider) {
@@ -9,6 +9,44 @@
       ext: '.svg',
     });
   });
+
+  app.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.translations('ca', {
+      'MODAL_NICKNAME': 'El teu sobrenom en aquesta sessió serà',
+      'MODAL_CLOSED': 'Aquesta conversa s\'ha tancat',
+      'MODAL_NOT_ALLOWED': 'No pots participar en aquesta conversa',
+      'MODAL_ALLOWED': 'Ja pots participar en aquesta conversa',
+      'MODAL_BANNED': 'El teu usuari està bloquejat',
+      'MODAL_PARTICIPATE': 'Ja pots demanar participar. Clica a la bafarada de la dreta',
+      'MODAL_ACCEPTED': 'La teva petició ha estat acceptada. Pots escriure als grups i als personatges',
+      'MODAL_NOT_ACCEPTED': 'La teva petició ha estat rebutjada. Si vols ho pots tornar a provar amb un altre argument',
+      'MODAL_VIEW': 'De moment pots veure els xats però no intervenir-hi',
+      'MODAL_PENDING': 'La teva petició està pendent d\'aprovació',
+      'SEND': 'Envia',
+      'YOUR_USERNAME_IS' : 'El teu sobrenom és',
+      'GROUPS' : 'Grups',
+      'CONTACTS' : 'Contactes',
+      'PUBLIC' : 'Públic'
+    });
+    $translateProvider.translations('es', {
+      'MODAL_NICKNAME': 'Tu apodo en esta sesión será',
+      'MODAL_CLOSED': 'Esta conversación se ha cerrado',
+      'MODAL_NOT_ALLOWED': 'No puedes participar en esta conversación',
+      'MODAL_ALLOWED': 'Ya puedes participar en esta conversaión',
+      'MODAL_BANNED': 'Tu usuario está bloqueado',
+      'MODAL_PARTICIPATE': 'Ya puedes solicitar la participación. Clica la burbuja de la derecha',
+      'MODAL_ACCEPTED': 'Tu petición ha sido aceptada. Puedes escribir a los grupos y a los personajes',
+      'MODAL_NOT_ACCEPTED': 'Tu petición ha sido rechazada. Si quieres puedes volver a intentarlo con otro argumento',
+      'MODAL_VIEW': 'De moment pots veure els xats però no intervenir-hi',
+      'MODAL_PENDING': 'Tu petición está pendiente de aprobación',
+      'SEND': 'Envia',
+      'YOUR_USERNAME_IS' : 'Tu apodo es',
+      'GROUPS' : 'Grupos',
+      'CONTACTS' : 'Contactos',
+      'PUBLIC' : 'Público'
+    });
+    $translateProvider.preferredLanguage('ca');
+  }]);
 
   //SERVICES
   //Service to interact with the socket library
@@ -51,7 +89,7 @@
     };
   });
 
-  app.controller('AppController', function($scope, socket, $cookieStore, $route, $routeParams, $location){
+  app.controller('AppController', function($scope, socket, $cookieStore, $route, $routeParams, $location, $translate){
     //Define glued setting
     $scope.glued = true;
 
@@ -66,6 +104,18 @@
     $scope.current_chatroom = {app: null};
     $scope.messages = {app: null};
     $scope.petition = {message: null, status: null};
+    $scope.unread = {last: null, total: {actorchats : 0, userchats : 0, groupchats : 0}};
+
+    //Define local functions
+    function updateUnread(type, message) {
+      var chat = message.chat_id1 + '_' + message.chat_id2;
+      var status = $scope[type][chatscreen][chat].status;
+      if (status != 1) {
+        $scope.unread.last = {id1 : message.chat_id1, id2 : message.chat_id2, status : status};
+        $scope.unread.total[type] += 1;
+        window.navigator.vibrate(300);
+      }
+    }
 
     //Get username if it's defined or define and store it
     if ($location.search().username){
@@ -97,23 +147,27 @@
       if ($scope.current_chatroom[chatscreen] != null) {
         if ((message.chat_id1==$scope.current_chatroom[chatscreen].id1) && (message.chat_id2==$scope.current_chatroom[chatscreen].id2)) {
           $scope.messages[chatscreen].push(message);
+          window.navigator.vibrate(300);
         }
       }
       if($scope.actorchats[chatscreen] && $scope.actorchats[chatscreen][message.chat_id1+'_'+message.chat_id2]) {
         if ($scope.current_chatroom[chatscreen] == null || $scope.current_chatroom[chatscreen].id1 != message.chat_id1 || $scope.current_chatroom[chatscreen].id2 != message.chat_id2) {
           $scope.actorchats[chatscreen][message.chat_id1+'_'+message.chat_id2].recived += 1;
+          updateUnread('actorchats', message);
         }
         $scope.actorchats[chatscreen][message.chat_id1+'_'+message.chat_id2].created = date;
       }
       if($scope.userchats[chatscreen] && $scope.userchats[chatscreen][message.chat_id1+'_'+message.chat_id2]) {
         if ($scope.current_chatroom[chatscreen] == null || $scope.current_chatroom[chatscreen].id1 != message.chat_id1 || $scope.current_chatroom[chatscreen].id2 != message.chat_id2) {
           $scope.userchats[chatscreen][message.chat_id1+'_'+message.chat_id2].recived += 1;
+          updateUnread('userchats', message);
         }
         $scope.userchats[chatscreen][message.chat_id1+'_'+message.chat_id2].created = date;
       }
       if($scope.groupchats[chatscreen] && $scope.groupchats[chatscreen][message.chat_id1+'_'+message.chat_id2]) {
         if ($scope.current_chatroom[chatscreen] == null || $scope.current_chatroom[chatscreen].id1 != message.chat_id1 || $scope.current_chatroom[chatscreen].id2 != message.chat_id2) {
           $scope.groupchats[chatscreen][message.chat_id1+'_'+message.chat_id2].recived += 1;
+          updateUnread('groupchats', message);
         }
         $scope.groupchats[chatscreen][message.chat_id1+'_'+message.chat_id2].created = date;
       }
@@ -125,14 +179,18 @@
       }
     });
     //New user created
-    socket.on('user:new', function(user) {
+    socket.on('user:new', function(data) {
+      var user = data.user;
+      $translate.use(data.language);
       $scope.current_user[chatscreen] = user;
       $cookieStore.put('username', user.username);
       socket.emit('chat:load_by_category', {category: 0, id: user.username, chatscreen: chatscreen, role: user.role});
       $('#wellcomeModal').modal('show');
     });
     //Recive current user
-    socket.on('user:load', function(user) {
+    socket.on('user:load', function(data) {
+      $translate.use(data.language);
+      var user = data.user;
       if(user) {
         $scope.current_user[chatscreen] = user;
         socket.emit('chat:load_by_category', {category: 0, id: user.username, chatscreen: chatscreen, role: user.role});
@@ -302,9 +360,19 @@
     this.selectChatroom = function(id1, id2, chatscreen, status){
       $scope.current_chatroom[chatscreen] = {id1: id1, id2: id2, status:status};
       socket.emit('message:loadchatroom', {id1: id1, id2: id2, chatscreen: chatscreen});
-      if($scope.actorchats[chatscreen] && $scope.actorchats[chatscreen][id1+'_'+id2]) $scope.actorchats[chatscreen][id1+'_'+id2].recived = 0;
-      if($scope.userchats[chatscreen] && $scope.userchats[chatscreen][id1+'_'+id2]) $scope.userchats[chatscreen][id1+'_'+id2].recived = 0;
-      if($scope.groupchats[chatscreen] && $scope.groupchats[chatscreen][id1+'_'+id2]) $scope.groupchats[chatscreen][id1+'_'+id2].recived = 0;
+      if($scope.actorchats[chatscreen] && $scope.actorchats[chatscreen][id1+'_'+id2]) {
+        $scope.unread.total.actorchats -= $scope.actorchats[chatscreen][id1+'_'+id2].recived;
+        $scope.actorchats[chatscreen][id1+'_'+id2].recived = 0;
+      }
+      if($scope.userchats[chatscreen] && $scope.userchats[chatscreen][id1+'_'+id2]) {
+        $scope.unread.total.userchats -= $scope.userchats[chatscreen][id1+'_'+id2].recived;
+        $scope.userchats[chatscreen][id1+'_'+id2].recived = 0;
+      }
+      if($scope.groupchats[chatscreen] && $scope.groupchats[chatscreen][id1+'_'+id2]) {
+        $scope.unread.total.groupchats -= $scope.groupchats[chatscreen][id1+'_'+id2].recived;
+        $scope.groupchats[chatscreen][id1+'_'+id2].recived = 0;
+      }
+      if(($scope.unread.last.id1 == id1) && ($scope.unread.last.id2 == id2)) $scope.unread.last = null;
     };
     this.resetChatroom = function(chatscreen) {
       $scope.current_chatroom[chatscreen] = null;

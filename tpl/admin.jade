@@ -9,6 +9,7 @@ html(lang="ca" )
     script(src='/libs/angular/angular.js')
     script(src='/libs/angular-cookies/angular-cookies.js')
     script(src='/libs/angular-sanitize/angular-sanitize.js')
+    script(src='/libs/angular-translate/angular-translate.min.js')
     script(src='/libs/twemoji/twemoji.js')
     script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
     script(src='/libs/angular-scroll-glue/src/scrollglue.js')
@@ -29,6 +30,10 @@ html(lang="ca" )
           a.navbar-brand
             | 1000Likes - Administració
         .collapse.navbar-collapse.navbar-right
+          | Idioma &nbsp;
+          select(ng-model="language", ng-change="Ctrl.languageUpdate()")
+            option(value="ca", ng-selected="language=='ca'") Català
+            option(value="es", ng-selected="language=='es'") Castellà
           | Estat general &nbsp;
           select(ng-model="bulk_status", ng-change="Ctrl.bulkUpdate()")
             option(value=0, ng-selected="bulk_status==0") Lectura

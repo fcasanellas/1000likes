@@ -6,11 +6,12 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
     link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/libs/fontawesome/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css', data-PolyCalc="1")
-    script(src='/libs/angular/angular.js')
-    script(src='/libs/angular-cookies/angular-cookies.js')
-    script(src='/libs/angular-sanitize/angular-sanitize.js')
-    script(src='/libs/angular-route/angular-route.js')
-    script(src='/libs/twemoji/twemoji.js')
+    script(src='/libs/angular/angular.min.js')
+    script(src='/libs/angular-cookies/angular-cookies.min.js')
+    script(src='/libs/angular-sanitize/angular-sanitize.min.js')
+    script(src='/libs/angular-route/angular-route.min.js')
+    script(src='/libs/angular-translate/angular-translate.min.js')
+    script(src='/libs/twemoji/twemoji.min.js')
     script(src='/libs/angular-twemoji/dist/angular-twemoji.js')
     script(src='/libs/angular-scroll-glue/src/scrollglue.js')
     script(src='/libs/modernizr/modernizr-custom.js')
@@ -38,7 +39,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/welcome.svg")
-              h4 El teu sobrenom en aquesta sessió serà
+              h4 {{ 'MODAL_NICKNAME' | translate }}
                 b &nbsp;{{current_user.app.username}}
 
     .modal.fade#groupClosedModal(tabindex="-1", role="dialog")
@@ -52,7 +53,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupClosed.svg")
-              h4 Aquesta conversa s'ha tancat
+              h4 {{ 'MODAL_CLOSED' | translate }}
     .modal.fade#groupAccessibleModal(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -64,7 +65,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupAccessible.svg")
-              h4 No pots participar en aquesta conversa
+              h4 {{ 'MODAL_NOT_ALLOWED' | translate }}
     .modal.fade#groupOpenModal(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -76,7 +77,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupOpen.svg")
-              h4 Ja pots participar en aquesta conversa
+              h4 {{ 'MODAL_ALLOWED' | translate }}
     .modal.fade#userBlocked(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -85,7 +86,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
               img(src="images/logo.svg")
             .modal-body
               img.img-responsive(src="images/userBlocked.svg")
-              h4 El teu usuari està bloquejat
+              h4 {{ 'MODAL_BANNED' | translate }}
     .modal.fade#userParticipation(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -97,7 +98,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupOpen.svg")
-              h4 Ja pots demanar participar. Clica a la bafarada de la dreta
+              h4 {{ 'MODAL_PARTICIPATE' | translate }}
     .modal.fade#userBypass(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -109,7 +110,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupOpen.svg")
-              h4 La teva petició ha estat acceptada. Pots escriure als grups i als personatges
+              h4 {{ 'MODAL_ACCEPTED' | translate }}
     .modal.fade#userNoBypass(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -121,7 +122,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupClosed.svg")
-              h4 La teva petició ha estat rebutjada. Si vols ho pots tornar a provar amb un altre argument
+              h4 {{ 'MODAL_NOT_ACCEPTED' | translate }}
     .modal.fade#userNormal(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -133,7 +134,7 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   &times;
             .modal-body
               img.img-responsive(src="images/groupAccessible.svg")
-              h4 De moment pots veure els xats però no intervenir-hi
+              h4 {{ 'MODAL_VIEW' | translate }}
     .modal.fade#participationForm(tabindex="-1", role="dialog")
       .vertical-alignment-helper
         .modal-dialog.vertical-align-center
@@ -146,9 +147,10 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
             .modal-body
               #petition-message.bg-warning(ng-hide="petition.status == null && current_user.app.status != 3")
                 p(ng-show = "petition.status == 0")
+                  | {{ 'MODAL_PENDING' | translate }}
                   | La teva petició està pendent d'aprovació
                 p(ng-show = "petition.status == 1 || current_user.app.status == 3")
-                  | La teva petició ha estat acceptada. Pots escriure als grups i personatges
+                  | {{ 'MODAL_ACCEPTED' | translate }}
                 p(ng-show = "petition.status == 0")
                   i {{petition.message}}
 
@@ -157,10 +159,10 @@ html(lang="ca", ng-app="1000likes", ng-controller="AppController as Ctrl")
                   textarea.form-control(rows="5", placeholder="Explica per quin motiu vols intervenir ...", ng-model="petition.message")
                   &nbsp;
                   button.btn.btn-lg.btn-block(type="submit")
-                    | Envia
+                    | {{ 'SEND' | translate }}
     .username
       span
-        | El teu nom d'usuari és &nbsp;
+        | {{ 'YOUR_USERNAME_IS' | translate }} &nbsp;
         b
           {{current_user.app.username}}
     +chatscreen("app")

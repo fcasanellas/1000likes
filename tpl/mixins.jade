@@ -1,19 +1,27 @@
 mixin chatscreen(chatscreen)
   .chatscreen
+    #newmessage(ng-show="unread.last", ng-click='Ctrl.selectChatroom(unread.last.id1, unread.last.id2, "'+chatscreen+'", unread.last.status); unread.last = null')
+      i.fa.fa-bell.fa-1x
     .selector(ng-hide='current_chatroom.'+chatscreen)
       ul.nav.nav-tabs(class=chatscreen)
         li.active
           a(data-toggle="tab", href="#groups-"+chatscreen, ng-click="Ctrl.resetChatroom()")
             i.fa.fa-users.fa-1x
-            &nbsp;Grups
+            &nbsp;{{ 'GROUPS' | translate }}&nbsp;
+            span.badge(ng-hide='unread.total.groupchats == 0')
+              {{unread.total.groupchats}}
         li
           a(data-toggle="tab", href="#actors-"+chatscreen, ng-click="Ctrl.resetChatroom()")
             i.fa.fa-user.fa-1x
-            &nbsp;Contactes
+            &nbsp;{{ 'CONTACTS' | translate }}&nbsp;
+            span.badge(ng-hide='unread.total.actorchats == 0')
+              {{unread.total.actorchats}}
         li(ng-show='userchats.'+chatscreen)
           a(data-toggle="tab", href="#users-"+chatscreen, ng-click="Ctrl.resetChatroom()")
             i.fa.fa-user.fa-1x
-            &nbsp;Públic
+            &nbsp;{{ 'PUBLIC' | translate }}&nbsp;
+            span.badge(ng-hide='unread.total.userchats == 0')
+              {{unread.total.userchats}}
         button.pull-right.btn.participation-button(ng-show='current_user.'+chatscreen+'.status == 1', ng-click="Ctrl.toggleParticipation()")
           i.fa.fa-comment
       .tab-content.undernav.chat-selector(class=chatscreen)
@@ -82,7 +90,7 @@ mixin chatpane(chatscreen)
         button.btn.btn-default.btn-primary(ng-class="{'btn-danger':beamerchats.beamer.id1==current_chatroom."+chatscreen+".id1 && beamerchats.beamer.id2==current_chatroom."+chatscreen+".id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2")', ng-click='Ctrl.sendToBeamer(current_chatroom.'+chatscreen+'.id1, current_chatroom.'+chatscreen+'.id2, "beamer")')
           i.fa.fa-desktop.fa-1x
         button.btn.btn-default.btn-info(ng-class="{'btn-danger':beamerchats.beamer2.id1==current_chatroom."+chatscreen+".id1 && beamerchats.beamer2.id2==current_chatroom."+chatscreen+".id2}", ng-if='("'+chatscreen+'"== "admin" || "'+chatscreen+'"== "admin2")', ng-click='Ctrl.sendToBeamer(current_chatroom.'+chatscreen+'.id1, current_chatroom.'+chatscreen+'.id2, "beamer2")')
-          i.fa.fa-desktop.fa-1x      
+          i.fa.fa-desktop.fa-1x
     .message-wrapper
       .undrenav.message-pane(scroll-glue="glued", class=chatscreen)
         ul

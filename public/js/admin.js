@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize']);
+  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'pascalprecht.translate']);
 
   //CONFIGURATION
   app.config(function(twemojiProvider) {
@@ -58,6 +58,9 @@
     //Deife participation setting
     $scope.bulk_status = 0;
     $scope.petitions = [];
+
+    //Define language
+    $scope.language = 'ca';
 
     //Define arrays for current user and more
     $scope.current_user = {admin: null, admin2: null};
@@ -251,6 +254,9 @@
       }
       socket.emit('user:update_default_status', $scope.bulk_status);
       $scope.petitions = [];
+    }
+    this.languageUpdate = function(){
+      socket.emit('user:update_default_language', $scope.language);
     }
 
     //CHAT FUNCTIONS

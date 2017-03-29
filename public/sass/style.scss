@@ -135,8 +135,8 @@ body.app {
   }
   .message-pane {
     &.app {
-      height: calc(100vh - 125px);
-      height: -moz-calc(100vh - 125px);
+      height: calc(100vh - 160px);
+      height: -moz-calc(100vh - 160px);
       .no-csscalc.no-cssvhunit & {
         height: 80vh;
       }
@@ -254,8 +254,8 @@ body.app {
       }
     }
     .label {
-      font-size: 20px;
-      margin: 10px auto;
+      font-size: 1em;
+      margin: 10px auto 0px;
     }
   }
 }
@@ -333,6 +333,87 @@ body.app {
     height: 40px;
     text-align: center;
     float: left;
+  }
+}
+
+#newmessage {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 100%;
+  color: whitesmoke;
+  position: fixed;
+  background-color: #e2202c;
+  z-index: 2;
+  padding: 9px 12px;
+  top: 10px;
+  right: 10px;
+}
+
+#newmessage.ng-hide-add {
+  -webkit-animation:0.5s hide;
+  animation:0.5s hide;
+}
+
+@keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+@-webkit-keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+
+#newmessage.ng-hide-remove {
+  -webkit-animation:0.3s show;
+  animation:0.3s show;
+}
+
+@keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:1;
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity:1;
+    transform: scale(1);
   }
 }
 

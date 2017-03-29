@@ -140,8 +140,8 @@ body.app .list-group-item a {
 }
 /* line 137, ../sass/style.scss */
 .chat-pane .message-pane.app {
-  height: calc(100vh - 125px);
-  height: -moz-calc(100vh - 125px);
+  height: calc(100vh - 160px);
+  height: -moz-calc(100vh - 160px);
   /*.csscalc.cssvhunit & {
     height: 80vh;
   }*/
@@ -357,8 +357,8 @@ body.app .list-group-item a {
 }
 /* line 256, ../sass/style.scss */
 .chat-pane .message-pane .label {
-  font-size: 20px;
-  margin: 10px auto;
+  font-size: 1em;
+  margin: 10px auto 0px;
 }
 
 /* line 262, ../sass/style.scss */
@@ -460,20 +460,99 @@ body.app .list-group-item a {
   float: left;
 }
 
+/* line 339, ../sass/style.scss */
+#newmessage {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 100%;
+  color: whitesmoke;
+  position: fixed;
+  background-color: #e2202c;
+  z-index: 2;
+  padding: 9px 12px;
+  top: 10px;
+  right: 10px;
+}
+
+/* line 353, ../sass/style.scss */
+#newmessage.ng-hide-add {
+  -webkit-animation: 0.5s hide;
+  animation: 0.5s hide;
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+@-webkit-keyframes hide {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+/* line 387, ../sass/style.scss */
+#newmessage.ng-hide-remove {
+  -webkit-animation: 0.3s show;
+  animation: 0.3s show;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 /*** BEAMER ***/
-/* line 340, ../sass/style.scss */
+/* line 421, ../sass/style.scss */
 body.beamer {
   font-size: 22px;
 }
-/* line 342, ../sass/style.scss */
+/* line 423, ../sass/style.scss */
 body.beamer #wrapper {
   text-align: center;
 }
-/* line 343, ../sass/style.scss */
+/* line 424, ../sass/style.scss */
 body.beamer .chat-pane {
   text-align: left;
 }
-/* line 344, ../sass/style.scss */
+/* line 425, ../sass/style.scss */
 body.beamer .chatscreen {
   border-radius: 5px;
   display: inline-block;
@@ -482,13 +561,13 @@ body.beamer .chatscreen {
   width: calc(50% - 40px);
   margin: 40px 20px 0px 20px;
 }
-/* line 351, ../sass/style.scss */
+/* line 432, ../sass/style.scss */
 body.beamer .chatscreen .chat-pane .message-pane .msg {
   max-width: 90%;
 }
 
 /*** ADMIN ***/
-/* line 358, ../sass/style.scss */
+/* line 439, ../sass/style.scss */
 .modal-background {
   height: 100%;
   width: 100%;
@@ -498,7 +577,7 @@ body.beamer .chatscreen .chat-pane .message-pane .msg {
   display: none;
 }
 
-/* line 366, ../sass/style.scss */
+/* line 447, ../sass/style.scss */
 .loading-content {
   top: 32%;
   left: -100px;
@@ -509,7 +588,7 @@ body.beamer .chatscreen .chat-pane .message-pane .msg {
   position: absolute;
 }
 
-/* line 376, ../sass/style.scss */
+/* line 457, ../sass/style.scss */
 .loading-circle {
   position: absolute;
   width: 200px;

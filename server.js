@@ -111,6 +111,7 @@ app.get("/beamer", function(req, res){
 
 //LOCAL VARS
 var default_status = 0;
+var default_language = 'ca';
 
 //SOCKET.IO
 var io = require('socket.io').listen(app.listen(port));
@@ -238,10 +239,10 @@ io.sockets.on('connection', function (socket) {
             if(sockettree.actors[actor.username]) sockettree.actors[actor.username].emit('chat:new', chat);
           });
         });
-        socket.emit('user:new', user);
+        socket.emit('user:new', {user : user, language : default_language});
         //DEBUG ********************************
         console.log(user);
-        socket.emit('user:created', data.username);
+        // socket.emit('user:created', data.username);
         // ************************************
         if(sockettree.admin) sockettree.admin.emit('user:new', user);
         //Store socket in sockettree
@@ -293,7 +294,7 @@ io.sockets.on('connection', function (socket) {
     //Load created user
     socket.on('user:load', function(username){
       User.findOne({username: username}, function(err,res){
-        socket.emit('user:load', res);
+        socket.emit('user:load', {user : res, language : default_language});
         if (res) {
           //Store socket in sockettree
           if(res.role == 0) {
@@ -315,6 +316,11 @@ io.sockets.on('connection', function (socket) {
     //Update default status
     socket.on('user:update_default_status', function(status) {
       default_status = status;
+    });
+    //Update default language
+    socket.on('user:update_default_language', function(language) {
+      default_language = language;
+      console.log('language is now '+language);
     });
 
 
@@ -414,6 +420,7 @@ io.sockets.on('connection', function (socket) {
 
     //Send a default message
     socket.on('message:senddefault', function (data) {
+      console.log('entra');
       var messages = require('./default_data/default_messages.json');
       var message = messages[data.pos];
       var newMsg = new Message({
@@ -429,6 +436,7 @@ io.sockets.on('connection', function (socket) {
         if(sockettree.actors[message.author]) sockettree.actors[message.author].emit('message:new', msg);
         if(sockettree.beamer) sockettree.beamer.emit('message:new', msg);
         if(sockettree.admin) sockettree.admin.emit('message:new', msg);
+        if(sockettree.users[msg.chat_id2]) sockettree.users[msg.chat_id2].emit('message:new', msg);
       });
       console.log(newMsg);
     });

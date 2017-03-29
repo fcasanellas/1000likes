@@ -1,5 +1,5 @@
 (function(){
-  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute', 'ngAudio']);
+  var app = angular.module('1000likes', ['ngCookies', 'luegg.directives', 'sc.twemoji', 'ngSanitize', 'ngRoute', 'ngAudio', 'pascalprecht.translate']);
 
   //CONFIGURATION
   app.config(function(twemojiProvider) {
